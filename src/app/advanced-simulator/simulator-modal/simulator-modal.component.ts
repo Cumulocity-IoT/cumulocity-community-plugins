@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AlertService, gettext, OptionsService } from '@c8y/ngx-components';
+import { AlertService, gettext } from '@c8y/ngx-components';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PROMPT } from './prompt';
 import { FetchClient } from '@c8y/client';
@@ -15,13 +15,13 @@ const AI_MODEL = 'claude-3-5-sonnet-20240620';
 export class SimulatorModalComponent {
   title = gettext('Add advanced simulator');
   useCase = '';
-  appOptions = inject(OptionsService);
-  apiKey = this.appOptions.get('apiKey');
+  apiKey = window.localStorage.getItem('anthropicApiKey') || '';
   result: Promise<any> = new Promise((resolve, reject) => {
     this._close = resolve;
     this._reject = reject;
   });
   pending = false;
+  isStoreApiKey = true;
   instances = 1;
   details = '';
   private _close: ((_) => void) | undefined;
@@ -45,6 +45,10 @@ export class SimulatorModalComponent {
         message,
         this.apiKey
       );
+
+      if (this.isStoreApiKey) {
+        window.localStorage.setItem('anthropicApiKey', this.apiKey);
+      }
 
       const promises = simulatorBody.map((body) =>
         this.createSimulator(this.client, body)
@@ -79,7 +83,7 @@ export class SimulatorModalComponent {
 
   async getSimulatorBodyForUsecase(
     usecase: string,
-    apiKey
+    apiKey: string
   ): Promise<{
     simulatorBody: Array<any>;
     usage: { input_tokens: number; output_tokens: number };
