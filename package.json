@@ -50,6 +50,7 @@
     "@angular/platform-browser-dynamic": "^17.3.9",
     "@angular/router": "^17.3.9",
     "@angular/upgrade": "^17.3.9",
+    "@anthropic-ai/sdk": "^0.27.3",
     "@c8y/bootstrap": "1020.2.12",
     "@c8y/client": "1020.2.12",
     "@c8y/ngx-components": "1020.2.12",

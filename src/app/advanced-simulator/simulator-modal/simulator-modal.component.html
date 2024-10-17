@@ -1,0 +1,73 @@
+<c8y-modal
+  [title]="title"
+  [headerClasses]="'dialog-header'"
+  [customFooter]="true"
+>
+  <ng-container c8y-modal-title>
+    <span [c8yIcon]="'send'"></span>
+  </ng-container>
+
+  <div class="p-24">
+    <c8y-form-group>
+      <label class="m-0">{{ 'Claude API Key' | translate }}</label>
+      <input
+        class="form-control flex-grow"
+        name="label"
+        [(ngModel)]="apiKey"
+        required
+        [placeholder]="'AI API Key to use for generating simulator'"
+      />
+    </c8y-form-group>
+
+    <c8y-form-group>
+      <label class="m-0">{{ 'Use case' | translate }}</label>
+      <input
+        class="form-control flex-grow"
+        name="label"
+        [(ngModel)]="useCase"
+        [placeholder]="'Provide use case to generate simulator for'"
+      />
+    </c8y-form-group>
+
+    <c8y-form-group>
+      <label class="m-0">{{ 'Number of instances' | translate }}</label>
+      <input
+        type="number"
+        min="1"
+        max="999999"
+        step="1"
+        required
+        class="form-control flex-grow"
+        name="label"
+        [(ngModel)]="instances"
+        [placeholder]="'Number of instances to generate'"
+      />
+    </c8y-form-group>
+
+    <c8y-form-group>
+      <label for="description">{{ 'Details' | translate }}</label>
+      <textarea
+        class="form-control"
+        id="description"
+        name="description"
+        style="height: 170px"
+        placeholder="Optional details to describe the use case"
+        [(ngModel)]="details"
+      ></textarea>
+    </c8y-form-group>
+  </div>
+
+  <div class="modal-footer" c8y-modal-footer-custom>
+    <button class="btn btn-default" (click)="cancel()">
+      {{ 'Cancel' }}
+    </button>
+    <button
+      class="btn btn-primary"
+      (click)="create()"
+      [disabled]="!useCase || pending"
+      [ngClass]="{ 'btn-pending': pending }"
+    >
+      {{ 'Create' }}
+    </button>
+  </div>
+</c8y-modal>
