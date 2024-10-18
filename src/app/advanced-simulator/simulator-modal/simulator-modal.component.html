@@ -16,7 +16,9 @@
           name="label"
           [(ngModel)]="apiKey"
           required
-          [placeholder]="'AI API Key to use for generating simulator'"
+          [placeholder]="
+            'AI API Key to use for generating simulator' | translate
+          "
         />
         <label
           class="c8y-checkbox text-nowrap m-l-8"
@@ -76,7 +78,7 @@
     <button
       class="btn btn-primary"
       (click)="create()"
-      [disabled]="!useCase || pending"
+      [disabled]="!useCase || !apiKey || pending"
       [ngClass]="{ 'btn-pending': pending }"
     >
       {{ 'Create' }}
