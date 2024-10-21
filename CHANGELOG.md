@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.2.2...v3.3.0) (2024-10-21)
+
+
+### Features
+
+* advanced simulators added as plugin ([#52](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/52)) ([4d08323](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/4d08323d3f2afd6ecd0924228ec230f9596c5edd))
+
 ## [3.2.2](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.2.1...v3.2.2) (2024-09-24)
 
 
