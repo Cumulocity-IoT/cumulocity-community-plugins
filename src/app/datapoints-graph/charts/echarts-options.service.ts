@@ -64,11 +64,13 @@ export class EchartsOptionsService {
       displayMarkedLine: boolean;
       displayMarkedPoint: boolean;
       mergeMatchingDatapoints: boolean;
+      showLabelAndUnit: boolean;
     }
   ): EChartsOption {
     const yAxis = this.yAxisService.getYAxis(datapointsWithValues, {
       showSplitLines: showSplitLines.YAxis,
       mergeMatchingDatapoints: displayOptions.mergeMatchingDatapoints,
+      showLabelAndUnit: displayOptions.showLabelAndUnit,
     });
     const leftAxis = yAxis.filter((yx) => yx.position === 'left');
     const gridLeft = leftAxis.length

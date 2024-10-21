@@ -57,15 +57,17 @@ export class YAxisService {
       }
 
       return {
-        name: YAxisOptions.mergeMatchingDatapoints
-          ? firstOccurrence.has(dp)
-            ? Array.from(matchingDpSet)
-                .map((dp) => `{${dp.__target?.id}${dp.unit}|${dp.unit}}`)
-                .join(' /')
-            : matchingDpRange
-              ? ''
-              : `${dp.label} [${dp.unit}]`
-          : `${dp.label} [${dp.unit}]`,
+        name: YAxisOptions.showLabelAndUnit
+          ? YAxisOptions.mergeMatchingDatapoints
+            ? firstOccurrence.has(dp)
+              ? Array.from(matchingDpSet)
+                  .map((dp) => `{${dp.__target?.id}${dp.unit}|${dp.unit}}`)
+                  .join(' /')
+              : matchingDpRange
+                ? ''
+                : `${dp.label} [${dp.unit}]`
+            : `${dp.label} [${dp.unit}]`
+          : '',
         nameLocation: 'middle',
         nameGap: 20,
         nameTextStyle: {

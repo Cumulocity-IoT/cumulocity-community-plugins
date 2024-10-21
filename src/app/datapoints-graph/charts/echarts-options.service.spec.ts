@@ -106,6 +106,7 @@ describe('EchartsOptionsService', () => {
         displayMarkedLine: true,
         displayMarkedPoint: true,
         mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
       }
     );
     // then
@@ -196,6 +197,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       );
       // then
@@ -227,6 +229,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       );
       // then
@@ -264,6 +267,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       );
       // then
@@ -293,6 +297,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).dataZoom as DataZoomComponentOption;
       // then
@@ -314,6 +319,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).dataZoom as DataZoomComponentOption;
       // then
@@ -335,6 +341,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).xAxis as XAXisOption;
       // then
@@ -356,6 +363,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).xAxis as XAXisOption;
       // then
@@ -393,6 +401,7 @@ describe('EchartsOptionsService', () => {
             displayMarkedLine: true,
             displayMarkedPoint: true,
             mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
           }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
@@ -444,6 +453,7 @@ describe('EchartsOptionsService', () => {
             displayMarkedLine: true,
             displayMarkedPoint: true,
             mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
           }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
@@ -509,6 +519,7 @@ describe('EchartsOptionsService', () => {
             displayMarkedLine: true,
             displayMarkedPoint: true,
             mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
           }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
@@ -557,6 +568,7 @@ describe('EchartsOptionsService', () => {
             displayMarkedLine: true,
             displayMarkedPoint: true,
             mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
           }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
@@ -591,6 +603,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).series as SeriesOption[];
       // then
@@ -626,6 +639,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).series as SeriesOption[];
       // then
@@ -669,6 +683,7 @@ describe('EchartsOptionsService', () => {
           displayMarkedLine: true,
           displayMarkedPoint: true,
           mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
         }
       ).series as SeriesOption[];
       // then
