@@ -36,6 +36,12 @@ export default {
         path: './src/app/datapoints-graph/datapoints-graph-widget.module.ts',
         description: 'Adds data points graph widget to the shell application',
       },
+      {
+        name: 'Advanced simulator',
+        module: 'AdvancedSimulatorModule',
+        path: './src/app/advanced-simulator/advanced-simulator.module.ts',
+        description: 'Allows to generate simulators with the help of Ai.',
+      },
     ],
     versioningMatrix,
   },
