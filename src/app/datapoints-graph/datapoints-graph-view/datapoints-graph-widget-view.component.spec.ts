@@ -27,7 +27,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import {
   AlarmSeverityToIconPipe,
   AlarmSeverityToLabelPipe,
-  AlarmsModule,
 } from '@c8y/ngx-components/alarms';
 
 @Component({
@@ -71,7 +70,6 @@ describe('DatapointsGraphWidgetViewComponent', () => {
         ChartsComponent,
         TooltipModule,
         PopoverModule,
-        AlarmsModule,
       ],
       declarations: [
         DatapointsGraphWidgetViewComponent,
