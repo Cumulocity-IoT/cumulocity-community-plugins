@@ -1,3 +1,10 @@
+# [3.4.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.3.0...v3.4.0) (2024-10-21)
+
+
+### Features
+
+* **datapoints-graph:** [MTM-59855] Removed alarm-event selector and alarm filtering from dpg2.0 ([512d894](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/512d8949f6711b57d6b0f07556c6415a683e20d8))
+
 # [3.3.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.2.2...v3.3.0) (2024-10-21)
 
 
