@@ -29,6 +29,8 @@ export type DatapointsGraphWidgetConfig = {
   widgetInstanceGlobalTimeContext?: boolean | null;
   displayMarkedLine?: boolean;
   displayMarkedPoint?: boolean;
+  mergeMatchingDatapoints?: boolean;
+  showLabelAndUnit?: boolean;
   dateFrom?: Date | null;
   dateTo?: Date | null;
   activeAlarmTypesOutOfRange?: string[];
@@ -188,6 +190,8 @@ export type DatapointRealtimeMeasurements = {
 
 export type YAxisOptions = {
   showSplitLines: boolean;
+  mergeMatchingDatapoints: boolean;
+  showLabelAndUnit: boolean;
 };
 
 export interface SeriesDatapointInfo {
