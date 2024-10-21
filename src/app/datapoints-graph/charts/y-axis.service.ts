@@ -47,7 +47,10 @@ export class YAxisService {
 
       if (firstOccurrence.has(dp)) {
         datapointsWithValues.forEach((dp2) => {
-          if (dp2.min === dp.min && dp2.max === dp.max) {
+          if (
+            (dp2.min === dp.min && dp2.max === dp.max && dp2.min !== null,
+            dp2.max !== null)
+          ) {
             matchingDpSet.add(dp2);
           }
         });
