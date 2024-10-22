@@ -24,6 +24,10 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FetchClient, Realtime } from '@c8y/client';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import {
+  AlarmSeverityToIconPipe,
+  AlarmSeverityToLabelPipe,
+} from '@c8y/ngx-components/alarms';
 
 @Component({
   selector: 'c8y-alarms-filter',
@@ -77,6 +81,8 @@ describe('DatapointsGraphWidgetViewComponent', () => {
         { provide: Realtime, useValue: {} },
         ChartEventsService,
         ChartAlarmsService,
+        AlarmSeverityToIconPipe,
+        AlarmSeverityToLabelPipe,
       ],
     });
     await TestBed.compileComponents();
