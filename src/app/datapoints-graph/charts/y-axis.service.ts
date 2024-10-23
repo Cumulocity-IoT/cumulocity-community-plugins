@@ -28,12 +28,20 @@ export class YAxisService {
     return datapointsWithValues.map((dp, index) => {
       const matchingDpRange = datapointsWithValues.some(
         (dp2, index2) =>
-          dp2.min === dp.min && dp2.max === dp.max && index2 < index
+          dp2.min === dp.min &&
+          dp2.max === dp.max &&
+          dp2.max !== null &&
+          dp2.min !== null &&
+          index2 < index
       );
 
       const anyMatchingDp = datapointsWithValues.some(
         (dp2, index2) =>
-          dp2.min === dp.min && dp2.max === dp.max && index2 !== index
+          dp2.min === dp.min &&
+          dp2.max === dp.max &&
+          dp2.max !== null &&
+          dp2.min !== null &&
+          index2 !== index
       );
 
       if (
@@ -98,7 +106,7 @@ export class YAxisService {
         },
         axisLabel: {
           fontSize: 10,
-          show: !matchingDpRange,
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
           formatter: (val) =>
             new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
               notation: 'compact',
@@ -112,7 +120,7 @@ export class YAxisService {
         position: YAxisPlacement.get(dp)?.position,
         offset: YAxisPlacement.get(dp)?.offset,
         axisTick: {
-          show: !matchingDpRange,
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
         },
         axisPointer: {
           show: false,
