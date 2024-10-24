@@ -136,6 +136,7 @@ describe('YAxisService', () => {
       const YAxis = service.getYAxis([dp1, dp2, dp3], {
         showSplitLines: false,
         mergeMatchingDatapoints: true,
+        showLabelAndUnit: true
       });
       // then
       expect(YAxis[0].position).toBe('left');
