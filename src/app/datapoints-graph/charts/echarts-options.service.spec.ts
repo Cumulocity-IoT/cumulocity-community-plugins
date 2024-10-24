@@ -106,7 +106,12 @@ describe('EchartsOptionsService', () => {
       },
       [],
       [],
-      { displayMarkedLine: true, displayMarkedPoint: true }
+      {
+        displayMarkedLine: true,
+        displayMarkedPoint: true,
+        mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
+      }
     );
     // then
     expect(JSON.stringify(options)).toBe(
@@ -192,7 +197,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(options.grid).toEqual({
@@ -219,7 +229,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(options.grid).toEqual({
@@ -252,7 +267,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(options.grid).toEqual({
@@ -277,7 +297,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).dataZoom as DataZoomComponentOption;
       // then
       expect(dataZoomOptions.filterMode).toBe('filter');
@@ -294,7 +319,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).dataZoom as DataZoomComponentOption;
       // then
       expect(dataZoomOptions.filterMode).toBe('none');
@@ -311,7 +341,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).xAxis as XAXisOption;
       // then
       expect(xAxisOptions.axisLine?.onZeroAxisIndex).toBe(-1);
@@ -328,7 +363,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).xAxis as XAXisOption;
       // then
       expect(xAxisOptions.axisLine?.onZeroAxisIndex).toBe(1);
@@ -361,7 +401,12 @@ describe('EchartsOptionsService', () => {
           },
           [],
           [],
-          { displayMarkedLine: true, displayMarkedPoint: true }
+          {
+            displayMarkedLine: true,
+            displayMarkedPoint: true,
+            mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
+          }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
       // when
@@ -408,7 +453,12 @@ describe('EchartsOptionsService', () => {
           },
           [],
           [],
-          { displayMarkedLine: true, displayMarkedPoint: true }
+          {
+            displayMarkedLine: true,
+            displayMarkedPoint: true,
+            mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
+          }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
       // when
@@ -469,7 +519,12 @@ describe('EchartsOptionsService', () => {
           },
           [],
           [],
-          { displayMarkedLine: true, displayMarkedPoint: true }
+          {
+            displayMarkedLine: true,
+            displayMarkedPoint: true,
+            mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
+          }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
       // when
@@ -513,7 +568,12 @@ describe('EchartsOptionsService', () => {
           },
           [],
           [],
-          { displayMarkedLine: true, displayMarkedPoint: true }
+          {
+            displayMarkedLine: true,
+            displayMarkedPoint: true,
+            mergeMatchingDatapoints: true,
+            showLabelAndUnit: true,
+          }
         ).tooltip as TooltipOption
       ).formatter as TooltipFormatterCallback<TopLevelFormatterParams>;
       // when
@@ -543,7 +603,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).series as SeriesOption[];
       // then
       expect(series).toHaveLength(1);
@@ -574,7 +639,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).series as SeriesOption[];
       // then
       expect(series).toHaveLength(2);
@@ -613,7 +683,12 @@ describe('EchartsOptionsService', () => {
         },
         [],
         [],
-        { displayMarkedLine: true, displayMarkedPoint: true }
+        {
+          displayMarkedLine: true,
+          displayMarkedPoint: true,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       ).series as SeriesOption[];
       // then
       expect(series).toHaveLength(2);
