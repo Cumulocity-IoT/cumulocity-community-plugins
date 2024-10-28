@@ -3,6 +3,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  Optional,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
@@ -33,6 +34,7 @@ import {
 import type { KPIDetails } from '@c8y/ngx-components/datapoint-selector';
 import { ChartsComponent } from '../charts';
 import { TranslateService } from '@ngx-translate/core';
+import { ContextDashboardComponent } from '@c8y/ngx-components/context-dashboard';
 
 @Component({
   selector: 'c8y-datapoints-graph-widget-view',
@@ -93,7 +95,8 @@ export class DatapointsGraphWidgetViewComponent
 
   constructor(
     private formBuilder: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    @Optional() private dashboardContextComponent: ContextDashboardComponent
   ) {
     this.timeControlsFormGroup = this.initForm();
     this.timeControlsFormGroup.valueChanges
@@ -101,6 +104,12 @@ export class DatapointsGraphWidgetViewComponent
       .subscribe((value) => {
         this.displayConfig = { ...this.displayConfig, ...value };
       });
+  }
+
+  ngOnInit() {
+    this.displayConfig?.datapoints?.forEach((dp) =>
+      this.assignContextFromContextDashboard(dp)
+    );
   }
 
   ngOnDestroy() {
@@ -227,6 +236,17 @@ export class DatapointsGraphWidgetViewComponent
       return alarm;
     });
     this.displayConfig = { ...this.displayConfig };
+  }
+
+  private assignContextFromContextDashboard(datapoint: KPIDetails) {
+    if (!this.dashboardContextComponent?.isDeviceTypeDashboard) {
+      return;
+    }
+    const context = this.dashboardContextComponent?.context;
+    if (context?.id) {
+      const { name, id } = context;
+      datapoint.__target = { name, id };
+    }
   }
 
   private initForm() {

@@ -1,3 +1,10 @@
+## [3.4.1](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.4.0...v3.4.1) (2024-10-23)
+
+
+### Bug Fixes
+
+* **datapoints-graph:** [MTM-59265] Context should now be automatically transformed for dp2 widget ([#36](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/36)) ([d822f53](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/d822f5359b3830ae5929283844e203e37e862519))
+
 # [3.4.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.3.0...v3.4.0) (2024-10-21)
 
 
