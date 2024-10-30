@@ -548,7 +548,7 @@ export class EchartsOptionsService {
     return exists;
   }
 
-  private getChartSeries(
+  getChartSeries(
     datapointsWithValues: DatapointWithValues[],
     events: IEvent[],
     alarms: IAlarm[],

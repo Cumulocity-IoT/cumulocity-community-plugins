@@ -7,8 +7,15 @@
   <div
     echarts
     [options]="chartOption$ | async"
-    style="width: 100%; height: 100%"
+    style="width: 100%; height: 90%"
     (chartInit)="onChartInit($event)"
+  ></div>
+
+  <div
+    echarts
+    [options]="sliderChartOptions"
+    style="width: 100%; height: 10%"
+    (chartInit)="onlySliderChartInit($event)"
   ></div>
 
   <c8y-chart-alerts [alerts]="alerts"></c8y-chart-alerts>

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   Input,
   OnChanges,
@@ -96,6 +97,7 @@ export class DatapointsGraphWidgetViewComponent
   constructor(
     private formBuilder: FormBuilder,
     private translate: TranslateService,
+    private cd: ChangeDetectorRef,
     @Optional() private dashboardContextComponent: ContextDashboardComponent
   ) {
     this.timeControlsFormGroup = this.initForm();
@@ -134,6 +136,9 @@ export class DatapointsGraphWidgetViewComponent
 
   timePropsChanged(timeProps: DatapointsGraphWidgetTimeProps): void {
     this.timeControlsFormGroup.patchValue(timeProps);
+    this.displayConfig = { ...this.displayConfig };
+    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 
   updateTimeRangeOnRealtime(
