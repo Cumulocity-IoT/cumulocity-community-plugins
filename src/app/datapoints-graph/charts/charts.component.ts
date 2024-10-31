@@ -22,7 +22,7 @@ import {
   MarkLineData,
 } from '../model';
 import { BehaviorSubject, forkJoin, lastValueFrom, Observable, of } from 'rxjs';
-import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { CustomMeasurementService } from './custom-measurements.service';
 import {
   AlarmRealtimeService,
@@ -60,6 +60,7 @@ import {
   AlarmSeverityToLabelPipe,
   AlarmsModule,
 } from '@c8y/ngx-components/alarms';
+import { initial } from 'cypress/types/lodash';
 
 type ZoomState = Record<'startValue' | 'endValue', number | string | Date>;
 
@@ -97,6 +98,8 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
   chartOption$: Observable<EChartsOption>;
   echartsInstance!: ECharts;
   sliderEchartsInstance!: ECharts;
+  initialTimeRange!: { dateFrom: string; dateTo: string };
+  firstLoad?: boolean = true;
   sliderChartOptions: any = {};
   zoomHistory: ZoomState[] = [];
   zoomInActive = false;
@@ -137,7 +140,7 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
           this.echartsInstance?.clear();
           return of(this.getDefaultChartOptions());
         }
-        return of(this.getChartOptions(datapointsWithValues));
+        return this.getChartOptions(datapointsWithValues);
       }),
       tap((v) => {
         if (this.zoomInActive) {
@@ -175,13 +178,21 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
     queueMicrotask(() => {
       this.updateZoomState();
     });
-    this.echartsInstance.on('dataZoom', (event) => {
+    this.echartsInstance.on('dataZoom', (event: any) => {
       const evt = event as ECActionEvent;
       const isZoomInActionFromHiddenToolbox = evt.batch?.[0]?.from != null;
       if (isZoomInActionFromHiddenToolbox) {
         this.updateZoomState();
         this.chartRealtimeService.stopRealtime();
       }
+
+      const options = this.echartsInstance.getOption();
+      const dataZoom = options['dataZoom'][0];
+      this.configChangeOnZoomOut.emit({
+        dateFrom: new Date(dataZoom['startValue']),
+        dateTo: new Date(dataZoom['endValue']),
+        interval: 'custom',
+      });
     });
     this.echartsInstance.on('click', this.onChartClick.bind(this));
 
@@ -200,7 +211,11 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
       }
 
       const options = this.echartsInstance.getOption() as EChartsOption;
-      if (!options.tooltip || !Array.isArray(options.tooltip)) {
+      if (
+        !options.tooltip ||
+        !Array.isArray(options.tooltip) ||
+        !options.tooltip[0]
+      ) {
         return;
       }
       originalFormatter = originalFormatter ?? options['tooltip'][0].formatter;
@@ -235,89 +250,92 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
     });
   }
 
-  async onlySliderChartInit(ec: ECharts) {
-    this.sliderEchartsInstance = ec;
-    const timeRange = this.getTimeRange(60_000);
+  // async onlySliderChartInit(ec: ECharts) {
+  //   this.sliderEchartsInstance = ec;
+  //   const timeRange = this.getTimeRange(60_000);
 
-    const currentTimeRange = this.getTimeRange();
+  //   const currentTimeRange = this.getTimeRange();
 
-    const onlySliderTimeRange = {
-      dateFrom: new Date(
-        new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000
-      ).toISOString(),
-      dateTo: timeRange.dateTo,
-    };
+  //   const onlySliderTimeRange = {
+  //     dateFrom: new Date(
+  //       new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000
+  //     ).toISOString(),
+  //     dateTo: timeRange.dateTo,
+  //   };
 
-    const alarms = await this.loadAlarms(onlySliderTimeRange);
-    const markLines = alarms.map((alarm) => ({
-      name: 'Alarm',
-      xAxis: alarm['lastUpdated'],
-      lineStyle: {
-        color: 'red',
-        type: 'dashed',
-      },
-      label: {
-        formatter: `Alarm at ${new Date(alarm['lastUpdated']).toLocaleString()}`,
-      },
-    }));
-    this.sliderChartOptions = {
-      grid: {
-        containLabel: false,
-        top: 32,
-        bottom: 24,
-      },
-      dataZoom: [
-        {
-          type: 'slider',
-          show: true,
-          xAxisIndex: 0,
-          // startValue: currentTimeRange.dateFrom.valueOf(),
-          // endValue: currentTimeRange.dateTo.valueOf(),
-          start: 0,
-          end: 100,
-          realtime: false,
-          filterMode: 'filter',
-        },
-      ],
-      xAxis: {
-        axisLine: { show: false },
-        axisLabels: { show: false },
-        axisTick: { show: false },
-        type: 'time',
-        min: onlySliderTimeRange.dateFrom,
-        max: onlySliderTimeRange.dateTo,
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          type: 'line', // Ensure the series type is specified
-          markLine: {
-            data: markLines,
-          },
-        },
-      ],
-    };
+  //   const alarms = await this.loadAlarms(onlySliderTimeRange);
+  //   const markLines = alarms.map((alarm) => ({
+  //     name: 'Alarm',
+  //     xAxis: alarm['lastUpdated'],
+  //     lineStyle: {
+  //       color: 'red',
+  //       type: 'dashed',
+  //     },
+  //     label: {
+  //       formatter: `Alarm at ${new Date(alarm['lastUpdated']).toLocaleString()}`,
+  //     },
+  //   }));
+  //   this.sliderChartOptions = {
+  //     grid: {
+  //       containLabel: false,
+  //       top: 32,
+  //       bottom: 24,
+  //     },
+  //     dataZoom: [
+  //       {
+  //         type: 'slider',
+  //         show: true,
+  //         xAxisIndex: 0,
+  //         // startValue: currentTimeRange.dateFrom.valueOf(),
+  //         // endValue: currentTimeRange.dateTo.valueOf(),
+  //         start: 0,
+  //         end: 100,
+  //         realtime: false,
+  //         filterMode: 'filter',
+  //       },
+  //     ],
+  //     xAxis: {
+  //       axisLine: { show: false },
+  //       axisLabels: { show: false },
+  //       axisTick: { show: false },
+  //       type: 'time',
+  //       min: onlySliderTimeRange.dateFrom,
+  //       max: onlySliderTimeRange.dateTo,
+  //     },
+  //     yAxis: {
+  //       type: 'value',
+  //     },
+  //     series: [
+  //       { type: 'line', markLine: { data: [] } as any },
+  //       {
+  //         type: 'line', // Ensure the series type is specified
+  //         markLine: {
+  //           data: markLines,
+  //         },
+  //       },
+  //     ],
+  //   };
 
-    this.sliderEchartsInstance.on('dataZoom', (event: any) => {
-      const startValue = this.calculateStartValueInMilliseconds(
-        event['start'],
-        new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000,
-        new Date(timeRange.dateTo).valueOf()
-      );
-      const endValue = this.calculateStartValueInMilliseconds(
-        event['end'],
-        new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000,
-        new Date(timeRange.dateTo).valueOf()
-      );
-      this.configChangeOnZoomOut.emit({
-        dateFrom: new Date(startValue),
-        dateTo: new Date(endValue),
-        interval: 'custom',
-      });
-    });
-  }
+  //   this.sliderEchartsInstance.on('dataZoom', (event: any) => {
+  //     console.log('dataZoom', event);
+  //     console.log(this.getTimeRange());
+  //     const startValue = this.calculateStartValueInMilliseconds(
+  //       event['start'],
+  //       new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000,
+  //       new Date(timeRange.dateTo).valueOf()
+  //     );
+  //     const endValue = this.calculateStartValueInMilliseconds(
+  //       event['end'],
+  //       new Date(timeRange.dateFrom).valueOf() - 30 * 24 * 60 * 60 * 1000,
+  //       new Date(timeRange.dateTo).valueOf()
+  //     );
+  //     this.configChangeOnZoomOut.emit({
+  //       dateFrom: new Date(startValue),
+  //       dateTo: new Date(endValue),
+  //       interval: 'custom',
+  //     });
+  //   });
+  // }
 
   calculateStartValueInMilliseconds(
     startPercentage: number,
@@ -675,24 +693,66 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  private getChartOptions(
+  private async getChartOptions(
     datapointsWithValues: DatapointWithValues[]
-  ): EChartsOption {
+  ): Promise<EChartsOption> {
     const timeRange = this.getTimeRange();
-    return this.echartsOptionsService.getChartOptions(
-      datapointsWithValues,
-      timeRange,
-      {
-        YAxis: this.config.yAxisSplitLines || false,
-        XAxis: this.config.xAxisSplitLines || false,
-      },
-      this.events,
-      this.alarms,
-      {
-        displayMarkedLine: this.config.displayMarkedLine || false,
-        displayMarkedPoint: this.config.displayMarkedPoint || false,
-      }
-    );
+
+    if (!this.initialTimeRange) {
+      this.initialTimeRange = timeRange;
+
+      const aggregatedDatapoints = await lastValueFrom(
+        this.fetchSeriesForDatapoints$({
+          dateFrom: new Date(
+            new Date(timeRange.dateFrom).valueOf() - 5 * 60 * 60 * 1000
+          ).toISOString(),
+          dateTo: timeRange.dateTo,
+        })
+      );
+      console.log(aggregatedDatapoints);
+      return this.echartsOptionsService.getChartOptions(
+        datapointsWithValues,
+        timeRange,
+        {
+          YAxis: this.config.yAxisSplitLines || false,
+          XAxis: this.config.xAxisSplitLines || false,
+        },
+        this.events,
+        this.alarms,
+        {
+          displayMarkedLine: this.config.displayMarkedLine || false,
+          displayMarkedPoint: this.config.displayMarkedPoint || false,
+        },
+        undefined,
+        aggregatedDatapoints
+      );
+    } else {
+      const aggregatedDatapoints = await lastValueFrom(
+        this.fetchSeriesForDatapoints$({
+          dateFrom: new Date(
+            new Date(this.initialTimeRange.dateFrom).valueOf() -
+              5 * 60 * 60 * 1000
+          ).toISOString(),
+          dateTo: this.initialTimeRange.dateTo,
+        })
+      );
+      return this.echartsOptionsService.getChartOptions(
+        datapointsWithValues,
+        this.initialTimeRange,
+        {
+          YAxis: this.config.yAxisSplitLines || false,
+          XAxis: this.config.xAxisSplitLines || false,
+        },
+        this.events,
+        this.alarms,
+        {
+          displayMarkedLine: this.config.displayMarkedLine || false,
+          displayMarkedPoint: this.config.displayMarkedPoint || false,
+        },
+        timeRange,
+        aggregatedDatapoints
+      );
+    }
   }
 
   private fetchSeriesForDatapoints$(
@@ -714,7 +774,7 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
           series: [`${dp.fragment}.${dp.series}`],
           ...(this.config.aggregation && {
             aggregationType: customTimeRange
-              ? aggregationType.DAILY
+              ? aggregationType.HOURLY
               : this.config.aggregation,
           }),
         })

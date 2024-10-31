@@ -62,7 +62,9 @@ export class EchartsOptionsService {
     showSplitLines: { YAxis: boolean; XAxis: boolean },
     events: IEvent[],
     alarms: IAlarm[],
-    displayOptions: { displayMarkedLine: boolean; displayMarkedPoint: boolean }
+    displayOptions: { displayMarkedLine: boolean; displayMarkedPoint: boolean },
+    selectedTimeRange?: { dateFrom: string; dateTo: string } | null,
+    aggregatedDatapoints?: DatapointWithValues[]
   ): EChartsOption {
     const yAxis = this.yAxisService.getYAxis(datapointsWithValues, {
       showSplitLines: showSplitLines.YAxis,
@@ -83,14 +85,28 @@ export class EchartsOptionsService {
         right: gridRight,
         bottom: 24,
       },
-      dataZoom: {
-        type: 'inside',
-        // TODO: use 'none' only when this bug is fixed https://github.com/apache/echarts/issues/17858
-        filterMode: datapointsWithValues.some((dp) => dp.lineType === 'bars')
-          ? 'filter'
-          : 'none',
-        zoomOnMouseWheel: false,
-      }, // on realtime, 'none' will cause extending chart line to left edge of the chart
+      dataZoom: [
+        {
+          type: 'inside',
+          // TODO: use 'none' only when this bug is fixed https://github.com/apache/echarts/issues/17858
+          filterMode: datapointsWithValues.some((dp) => dp.lineType === 'bars')
+            ? 'filter'
+            : 'none',
+          zoomOnMouseWheel: false,
+          startValue: selectedTimeRange
+            ? selectedTimeRange.dateFrom.valueOf()
+            : timeRange.dateFrom.valueOf(),
+          endValue: selectedTimeRange
+            ? selectedTimeRange.dateTo.valueOf()
+            : timeRange.dateTo.valueOf(),
+        },
+        {
+          type: 'slider',
+          show: true,
+          bottom: 5,
+          realtime: false,
+        },
+      ], // on realtime, 'none' will cause extending chart line to left edge of the chart
       animation: false,
       toolbox: {
         show: true,
@@ -116,39 +132,44 @@ export class EchartsOptionsService {
       legend: {
         show: false,
       },
-      xAxis: {
-        min: timeRange.dateFrom,
-        max: timeRange.dateTo,
-        type: 'time',
-        animation: false,
-        axisPointer: {
-          label: {
-            show: false,
+      xAxis: [
+        {
+          min: new Date(timeRange.dateFrom).valueOf() - 5 * 60 * 60 * 1000,
+          max: timeRange.dateTo,
+          type: 'time',
+          animation: false,
+          axisPointer: {
+            label: {
+              show: false,
+            },
+          },
+          axisLine: {
+            // align X axis to 0 of Y axis of datapoint with lineType 'bars'
+            onZeroAxisIndex: datapointsWithValues.findIndex(
+              (dp) => dp.lineType === 'bars'
+            ),
+          },
+          axisLabel: {
+            hideOverlap: true,
+            borderWidth: 2, // as there is no margin for labels spacing, transparent border is a workaround
+            borderColor: 'transparent',
+          },
+          splitLine: {
+            show: showSplitLines.XAxis,
+            lineStyle: { opacity: 0.8, type: 'dashed', width: 2 },
           },
         },
-        axisLine: {
-          // align X axis to 0 of Y axis of datapoint with lineType 'bars'
-          onZeroAxisIndex: datapointsWithValues.findIndex(
-            (dp) => dp.lineType === 'bars'
-          ),
-        },
-        axisLabel: {
-          hideOverlap: true,
-          borderWidth: 2, // as there is no margin for labels spacing, transparent border is a workaround
-          borderColor: 'transparent',
-        },
-        splitLine: {
-          show: showSplitLines.XAxis,
-          lineStyle: { opacity: 0.8, type: 'dashed', width: 2 },
-        },
-      },
+      ],
       yAxis,
-      series: this.getChartSeries(
-        datapointsWithValues,
-        events,
-        alarms,
-        displayOptions
-      ),
+      series: [
+        ...this.getAggregatedSeries(aggregatedDatapoints || []),
+        ...this.getChartSeries(
+          datapointsWithValues,
+          events,
+          alarms,
+          displayOptions
+        ),
+      ],
     };
   }
 
@@ -548,6 +569,23 @@ export class EchartsOptionsService {
     return exists;
   }
 
+  getAggregatedSeries(
+    aggregatedDatapoints: DatapointWithValues[]
+  ): SeriesOption[] {
+    const series: SeriesOption[] = [];
+    aggregatedDatapoints.forEach((dp, idx) => {
+      const renderType: DatapointChartRenderType = dp.renderType || 'min';
+      if (renderType === 'area') {
+        series.push(this.getSingleSeries(dp, 'min', idx, true));
+        series.push(this.getSingleSeries(dp, 'max', idx, true));
+      } else {
+        series.push(this.getSingleSeries(dp, renderType, idx, false));
+      }
+    });
+
+    return [...series];
+  }
+
   getChartSeries(
     datapointsWithValues: DatapointWithValues[],
     events: IEvent[],
@@ -877,11 +915,14 @@ export class EchartsOptionsService {
     isMinMaxChart = false
   ): SeriesOption & SeriesDatapointInfo {
     const datapointId = dp.__target?.id + dp.fragment + dp.series;
+    const randomNumberTo100000 = Math.floor(Math.random() * 100000); // REMOVE LATER LOL
     return {
       datapointId,
       datapointUnit: dp.unit || '',
       // 'id' property is needed as 'seriesId' in tooltip formatter
-      id: isMinMaxChart ? `${datapointId}/${renderType}` : `${datapointId}`,
+      id: isMinMaxChart
+        ? `${datapointId}/${renderType}${randomNumberTo100000}`
+        : `${datapointId}${randomNumberTo100000}`,
       name: `${dp.label} (${dp.__target?.['name']})`,
       // datapointLabel used to proper display of tooltip
       datapointLabel: dp.label || '',
