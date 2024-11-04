@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { DatePipe } from '@c8y/ngx-components';
-import type { EChartsOption, SeriesOption } from 'echarts';
+import type { EChartsOption, LineSeriesOption, SeriesOption } from 'echarts';
 import { ECharts } from 'echarts';
 import {
   DatapointChartRenderType,
   DatapointWithValues,
   DateString,
   DpValuesItem,
+  EchartsSeriesOptions,
   MarkLineData,
   MarkPointData,
   SeriesDatapointInfo,
@@ -132,34 +133,32 @@ export class EchartsOptionsService {
       legend: {
         show: false,
       },
-      xAxis: [
-        {
-          min: new Date(timeRange.dateFrom).valueOf() - 5 * 60 * 60 * 1000,
-          max: timeRange.dateTo,
-          type: 'time',
-          animation: false,
-          axisPointer: {
-            label: {
-              show: false,
-            },
-          },
-          axisLine: {
-            // align X axis to 0 of Y axis of datapoint with lineType 'bars'
-            onZeroAxisIndex: datapointsWithValues.findIndex(
-              (dp) => dp.lineType === 'bars'
-            ),
-          },
-          axisLabel: {
-            hideOverlap: true,
-            borderWidth: 2, // as there is no margin for labels spacing, transparent border is a workaround
-            borderColor: 'transparent',
-          },
-          splitLine: {
-            show: showSplitLines.XAxis,
-            lineStyle: { opacity: 0.8, type: 'dashed', width: 2 },
+      xAxis: {
+        min: new Date(timeRange.dateFrom).valueOf() - 5 * 60 * 60 * 1000,
+        max: timeRange.dateTo,
+        type: 'time',
+        animation: false,
+        axisPointer: {
+          label: {
+            show: false,
           },
         },
-      ],
+        axisLine: {
+          // align X axis to 0 of Y axis of datapoint with lineType 'bars'
+          onZeroAxisIndex: datapointsWithValues.findIndex(
+            (dp) => dp.lineType === 'bars'
+          ),
+        },
+        axisLabel: {
+          hideOverlap: true,
+          borderWidth: 2, // as there is no margin for labels spacing, transparent border is a workaround
+          borderColor: 'transparent',
+        },
+        splitLine: {
+          show: showSplitLines.XAxis,
+          lineStyle: { opacity: 0.8, type: 'dashed', width: 2 },
+        },
+      },
       yAxis,
       series: [
         ...this.getAggregatedSeries(aggregatedDatapoints || []),
@@ -583,7 +582,19 @@ export class EchartsOptionsService {
       }
     });
 
-    return [...series];
+    series.forEach((s: any) => {
+      s.typeOfSeries = 'fake';
+      s.itemStyle = {
+        ...s.itemStyle,
+        opacity: 0,
+      };
+      s.lineStyle = {
+        ...s.lineStyle,
+        opacity: 0,
+      };
+    });
+
+    return [series[0]];
   }
 
   getChartSeries(
@@ -953,7 +964,8 @@ export class EchartsOptionsService {
       const allDataPointSeries = allSeries.filter(
         (series) =>
           series['typeOfSeries'] !== 'alarm' &&
-          series['typeOfSeries'] !== 'event'
+          series['typeOfSeries'] !== 'event' &&
+          series['typeOfSeries'] !== 'fake'
       );
 
       allDataPointSeries.forEach((series: CustomSeriesOptions) => {

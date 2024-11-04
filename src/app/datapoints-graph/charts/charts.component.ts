@@ -101,6 +101,7 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
   initialTimeRange!: { dateFrom: string; dateTo: string };
   firstLoad?: boolean = true;
   sliderChartOptions: any = {};
+  showLoadMore = false;
   zoomHistory: ZoomState[] = [];
   zoomInActive = false;
   alarms: IAlarm[] = [];
@@ -178,12 +179,16 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
     queueMicrotask(() => {
       this.updateZoomState();
     });
-    this.echartsInstance.on('dataZoom', (event: any) => {
+    const debouncedDataZoomHandler = this.debounce((event: any) => {
       const evt = event as ECActionEvent;
       const isZoomInActionFromHiddenToolbox = evt.batch?.[0]?.from != null;
       if (isZoomInActionFromHiddenToolbox) {
         this.updateZoomState();
         this.chartRealtimeService.stopRealtime();
+      }
+
+      if (evt.batch?.[0]?.start === 0 || evt['start'] === 0) {
+        this.showLoadMore = true;
       }
 
       const options = this.echartsInstance.getOption();
@@ -193,7 +198,10 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
         dateTo: new Date(dataZoom['endValue']),
         interval: 'custom',
       });
-    });
+      this.echartsInstance.setOption(options);
+    }, 50); // debounce
+
+    this.echartsInstance.on('dataZoom', debouncedDataZoomHandler);
     this.echartsInstance.on('click', this.onChartClick.bind(this));
 
     let originalFormatter:
@@ -248,6 +256,32 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
         this.echartsInstance.setOption(options);
       }
     });
+  }
+
+  loadMoreData() {
+    this.config.interval = 'custom';
+    this.initialTimeRange.dateFrom = new Date(
+      new Date(this.initialTimeRange.dateFrom).valueOf() - 5 * 60 * 60 * 1000
+    ).toISOString();
+    const options = this.echartsInstance.getOption();
+    const dataZoom = options['dataZoom'][0];
+    this.configChangeOnZoomOut.emit({
+      dateFrom: new Date(dataZoom['startValue']),
+      dateTo: new Date(dataZoom['endValue']),
+      interval: 'custom',
+    });
+    this.showLoadMore = false;
+  }
+
+  debounce<T extends (...args: any[]) => void>(
+    func: T,
+    wait: number
+  ): (...args: Parameters<T>) => void {
+    let timeout: ReturnType<typeof setTimeout>;
+    return (...args: Parameters<T>) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
+    };
   }
 
   // async onlySliderChartInit(ec: ECharts) {
@@ -709,7 +743,6 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
           dateTo: timeRange.dateTo,
         })
       );
-      console.log(aggregatedDatapoints);
       return this.echartsOptionsService.getChartOptions(
         datapointsWithValues,
         timeRange,
