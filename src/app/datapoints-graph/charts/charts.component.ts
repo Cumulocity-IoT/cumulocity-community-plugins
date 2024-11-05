@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostListener,
@@ -22,7 +21,7 @@ import {
   MarkLineData,
 } from '../model';
 import { BehaviorSubject, forkJoin, lastValueFrom, Observable, of } from 'rxjs';
-import { first, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { CustomMeasurementService } from './custom-measurements.service';
 import {
   AlarmRealtimeService,
@@ -60,7 +59,6 @@ import {
   AlarmSeverityToLabelPipe,
   AlarmsModule,
 } from '@c8y/ngx-components/alarms';
-import { initial } from 'cypress/types/lodash';
 
 type ZoomState = Record<'startValue' | 'endValue', number | string | Date>;
 
@@ -130,8 +128,7 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
     private echartsOptionsService: EchartsOptionsService,
     private chartRealtimeService: ChartRealtimeService,
     private chartEventsService: ChartEventsService,
-    private chartAlarmsService: ChartAlarmsService,
-    private cd: ChangeDetectorRef
+    private chartAlarmsService: ChartAlarmsService
   ) {
     this.chartOption$ = this.configChangedSubject.pipe(
       switchMap(() => this.loadAlarmsAndEvents()),
@@ -150,7 +147,7 @@ export class ChartsComponent implements OnChanges, OnInit, OnDestroy {
         this.chartRealtimeService.stopRealtime();
         this.startRealtimeIfPossible();
         if (this.echartsInstance) {
-          this.echartsInstance.setOption(v);
+          this.echartsInstance.setOption(v, true);
         }
       })
     );

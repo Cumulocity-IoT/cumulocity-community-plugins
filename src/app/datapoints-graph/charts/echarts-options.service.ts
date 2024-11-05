@@ -84,7 +84,7 @@ export class EchartsOptionsService {
         left: gridLeft,
         top: 32,
         right: gridRight,
-        bottom: 24,
+        bottom: 60,
       },
       dataZoom: [
         {
