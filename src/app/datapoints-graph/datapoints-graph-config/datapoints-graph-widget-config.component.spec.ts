@@ -29,7 +29,10 @@ import { DatapointSelectorModule } from '@c8y/ngx-components/datapoint-selector'
 import { aggregationType } from '@c8y/client';
 import { AnimationBuilder } from '@angular/animations';
 import { take } from 'rxjs/operators';
-import { WidgetConfigComponent } from '@c8y/ngx-components/context-dashboard';
+import {
+  ContextDashboardComponent,
+  WidgetConfigComponent,
+} from '@c8y/ngx-components/context-dashboard';
 import {
   AlarmEventSelectionListComponent,
   AlarmDetails,
@@ -97,6 +100,10 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         },
         { provide: ChartEventsService, useValue: {} },
         { provide: ChartAlarmsService, useValue: {} },
+        {
+          provide: ContextDashboardComponent,
+          useValue: { isDeviceTypeDashboard: true },
+        },
       ],
     });
     await TestBed.compileComponents();
@@ -114,7 +121,7 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should set contextAsset for datapoint selector', () => {
+    it('should set contextAsset for datapoint selector when having device type dashboard', () => {
       // when
       component.ngOnInit();
       // then
