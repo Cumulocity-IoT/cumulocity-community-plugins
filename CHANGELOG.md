@@ -1,3 +1,10 @@
+# [3.5.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.4.1...v3.5.0) (2024-11-06)
+
+
+### Features
+
+* add app builder dashboard migration button plugin ([#55](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/55)) ([aa50577](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/aa50577917b742ee6610b874ac01e8f01df3a4b5))
+
 ## [3.4.1](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.4.0...v3.4.1) (2024-10-23)
 
 
