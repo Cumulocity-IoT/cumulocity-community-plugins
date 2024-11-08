@@ -1,3 +1,10 @@
+# [3.6.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.5.0...v3.6.0) (2024-11-08)
+
+
+### Features
+
+* add support for migrating even more app builder dashboards ([30c6fe2](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/30c6fe2cb6e73887898570e1c16feadc573d1087))
+
 # [3.5.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.4.1...v3.5.0) (2024-11-06)
 
 
