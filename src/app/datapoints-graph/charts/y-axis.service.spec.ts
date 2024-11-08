@@ -15,6 +15,8 @@ describe('YAxisService', () => {
     __target: { id: 1 },
     color: 'blue',
     values: {},
+    label: 'DP1',
+    unit: 'C',
   };
   const dp2: DatapointWithValues = {
     lineType: 'line',
@@ -54,6 +56,8 @@ describe('YAxisService', () => {
     // given
     const YAxis: YAXisOption = service.getYAxis([dp1], {
       showSplitLines: false,
+      mergeMatchingDatapoints: true,
+      showLabelAndUnit: true,
     })[0];
     // when
     const YAxisValue = (YAxis.axisLabel as any).formatter(1_400_000_000);
@@ -63,10 +67,20 @@ describe('YAxisService', () => {
 
   it('should return Y axis option with generic values', () => {
     // when
-    const YAxis = service.getYAxis([dp1], { showSplitLines: false })[0];
+    const YAxis = service.getYAxis([dp1], {
+      showSplitLines: false,
+      mergeMatchingDatapoints: false,
+      showLabelAndUnit: true,
+    })[0];
     // then
     expect(JSON.stringify(YAxis)).toEqual(
       JSON.stringify({
+        name: 'DP1 [C]',
+        nameLocation: 'middle',
+        nameGap: 20,
+        nameTextStyle: {
+          rich: {},
+        },
         type: 'value',
         animation: true,
         axisLine: {
@@ -78,6 +92,7 @@ describe('YAxisService', () => {
         },
         axisLabel: {
           fontSize: 10,
+          show: true,
           formatter: (val) =>
             new Intl.NumberFormat('en-GB', {
               notation: 'compact',
@@ -107,6 +122,8 @@ describe('YAxisService', () => {
     // when
     const YAxis = service.getYAxis([{ ...dp1, min: -100, max: 100 }], {
       showSplitLines: false,
+      mergeMatchingDatapoints: true,
+      showLabelAndUnit: true,
     })[0];
     // then
     expect(YAxis.min).toEqual(-100);
@@ -118,6 +135,8 @@ describe('YAxisService', () => {
       // when
       const YAxis = service.getYAxis([dp1, dp2, dp3], {
         showSplitLines: false,
+        mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
       });
       // then
       expect(YAxis[0].position).toBe('left');
@@ -132,7 +151,11 @@ describe('YAxisService', () => {
       // when
       const YAxis = service.getYAxis(
         [{ ...dp1, yAxisType: 'left' }, { ...dp2, yAxisType: 'left' }, dp3],
-        { showSplitLines: false }
+        {
+          showSplitLines: false,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(YAxis[0].position).toBe('left');
@@ -151,7 +174,11 @@ describe('YAxisService', () => {
           { ...dp2, yAxisType: 'right' },
           { ...dp3, yAxisType: 'left' },
         ],
-        { showSplitLines: false }
+        {
+          showSplitLines: false,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(YAxis[0].position).toBe('left');

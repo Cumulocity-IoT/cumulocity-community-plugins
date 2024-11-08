@@ -22,42 +22,114 @@ export class YAxisService {
       { position: DatapointAxisType; offset: number }
     > = this.getYAxisPlacement(datapointsWithValues);
 
-    return datapointsWithValues.map((dp) => ({
-      type: 'value',
-      animation: true,
-      axisLine: {
-        show: true,
-        lineStyle: {
-          color: dp.color,
+    const matchingDpSet = new Set<DatapointWithValues>();
+    const firstOccurrence = new Set<DatapointWithValues>();
+
+    return datapointsWithValues.map((dp, index) => {
+      const isDefined = (value: number | undefined) =>
+        value !== null && value !== undefined;
+      const isMatchingDp = (
+        dp1: DatapointWithValues,
+        dp2: DatapointWithValues
+      ) =>
+        dp1.min === dp2.min &&
+        dp1.max === dp2.max &&
+        isDefined(dp1.min) &&
+        isDefined(dp1.max) &&
+        isDefined(dp2.min) &&
+        isDefined(dp2.max);
+
+      const matchingDpRange = datapointsWithValues.some(
+        (dp2, index2) => isMatchingDp(dp, dp2) && index2 < index
+      );
+
+      const anyMatchingDp = datapointsWithValues.some(
+        (dp2, index2) => isMatchingDp(dp, dp2) && index2 !== index
+      );
+
+      if (
+        anyMatchingDp &&
+        !matchingDpRange &&
+        YAxisOptions.mergeMatchingDatapoints &&
+        !firstOccurrence.has(dp)
+      ) {
+        firstOccurrence.add(dp);
+      }
+
+      if (firstOccurrence.has(dp)) {
+        datapointsWithValues.forEach((dp2) => {
+          if (isMatchingDp(dp, dp2)) {
+            matchingDpSet.add(dp2);
+          }
+        });
+      }
+
+      return {
+        name: YAxisOptions.showLabelAndUnit
+          ? YAxisOptions.mergeMatchingDatapoints
+            ? firstOccurrence.has(dp)
+              ? Array.from(matchingDpSet)
+                  .map((dp) => `{${dp.__target?.id}|${dp.unit}}`)
+                  .join(' /')
+              : matchingDpRange
+                ? ''
+                : `${dp.label} [${dp.unit}]`
+            : `${dp.label} [${dp.unit}]`
+          : '',
+        nameLocation: 'middle',
+        nameGap: 20,
+        nameTextStyle: {
+          // add rich text to support multiple colors for different dp units
+          rich: {
+            ...Array.from(matchingDpSet).reduce((acc, dp) => {
+              const accKey = `${dp.__target?.id}`;
+              acc[accKey] = {
+                color: dp.color,
+              };
+              return acc;
+            }, {}),
+          },
         },
-        onZero: false,
-      },
-      axisLabel: {
-        fontSize: 10,
-        formatter: (val) =>
-          new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
-            notation: 'compact',
-            compactDisplay: 'short',
-          }).format(val),
-      },
-      splitLine: {
-        show: YAxisOptions.showSplitLines,
-        lineStyle: { color: dp.color, opacity: 0.4, type: 'dashed' },
-      },
-      position: YAxisPlacement.get(dp).position,
-      offset: YAxisPlacement.get(dp).offset,
-      axisTick: {
-        show: true,
-      },
-      axisPointer: {
-        show: false,
-        label: {
+        type: 'value',
+        animation: true,
+        axisLine: {
+          show:
+            matchingDpRange && YAxisOptions.mergeMatchingDatapoints
+              ? false
+              : true,
+          lineStyle: {
+            color: firstOccurrence.has(dp) ? 'black' : dp.color,
+          },
+          onZero: false,
+        },
+        axisLabel: {
+          fontSize: 10,
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
+          formatter: (val) =>
+            new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
+              notation: 'compact',
+              compactDisplay: 'short',
+            }).format(val),
+        },
+        splitLine: {
+          show: YAxisOptions.showSplitLines && !matchingDpRange,
+          lineStyle: { color: dp.color, opacity: 0.4, type: 'dashed' },
+        },
+        position: YAxisPlacement.get(dp)?.position,
+        offset: YAxisPlacement.get(dp)?.offset,
+        axisTick: {
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
+        },
+        axisPointer: {
           show: false,
+          label: {
+            show: false,
+          },
         },
-      },
-      ...(dp.min && { min: dp.min }),
-      ...(dp.max && { max: dp.max }),
-    }));
+        ...(dp.min && { min: dp.min }),
+        ...(dp.max && { max: dp.max }),
+      };
+    });
   }
 
   private getYAxisPlacement(

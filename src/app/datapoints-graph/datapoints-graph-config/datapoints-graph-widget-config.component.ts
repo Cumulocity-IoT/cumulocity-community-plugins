@@ -35,7 +35,10 @@ import {
 } from '@c8y/ngx-components/datapoint-selector';
 import { omit } from 'lodash-es';
 import { aggregationType } from '@c8y/client';
-import { WidgetConfigComponent } from '@c8y/ngx-components/context-dashboard';
+import {
+  ContextDashboardComponent,
+  WidgetConfigComponent,
+} from '@c8y/ngx-components/context-dashboard';
 import {
   AlarmDetails,
   EventDetails,
@@ -86,7 +89,8 @@ export class DatapointsGraphWidgetConfigComponent
     private formBuilder: FormBuilder,
     private form: NgForm,
     private translate: TranslateService,
-    @Optional() private widgetConfig: WidgetConfigComponent
+    @Optional() private widgetConfig: WidgetConfigComponent,
+    @Optional() private dashboardContextComponent: ContextDashboardComponent
   ) {
     this.formGroup = this.initForm();
   }
@@ -178,6 +182,9 @@ export class DatapointsGraphWidgetConfigComponent
   }
 
   private assignContextFromContextDashboard(datapoint: KPIDetails) {
+    if (!this.dashboardContextComponent?.isDeviceTypeDashboard) {
+      return;
+    }
     const context = this.widgetConfig?.context;
     if (context?.id) {
       const { name, id } = context;
@@ -212,6 +219,8 @@ export class DatapointsGraphWidgetConfigComponent
       events: [[] as EventDetails[]],
       displayMarkedLine: [true, []],
       displayMarkedPoint: [true, []],
+      mergeMatchingDatapoints: [true, []],
+      showLabelAndUnit: [true, []],
       displayDateSelection: [false, []],
       displayAggregationSelection: [false, []],
       widgetInstanceGlobalTimeContext: [false, []],

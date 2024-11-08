@@ -48,7 +48,7 @@ async function loadConfigComponent() {
             settings: {
               noNewWidgets: false,
               widgetDefaults: {
-                _width: 4,
+                _width: 8,
                 _height: 4,
               },
               noDeviceTarget: true,
@@ -56,6 +56,8 @@ async function loadConfigComponent() {
             },
             displaySettings: {
               globalTimeContext: true,
+              globalAggregationContext: true,
+              globalRealtimeContext: true,
             },
           } as ContextWidgetConfig,
           errorStrategy: DynamicComponentErrorStrategy.CUSTOM,

@@ -62,10 +62,17 @@ export class EchartsOptionsService {
     showSplitLines: { YAxis: boolean; XAxis: boolean },
     events: IEvent[],
     alarms: IAlarm[],
-    displayOptions: { displayMarkedLine: boolean; displayMarkedPoint: boolean }
+    displayOptions: {
+      displayMarkedLine: boolean;
+      displayMarkedPoint: boolean;
+      mergeMatchingDatapoints: boolean;
+      showLabelAndUnit: boolean;
+    }
   ): EChartsOption {
     const yAxis = this.yAxisService.getYAxis(datapointsWithValues, {
       showSplitLines: showSplitLines.YAxis,
+      mergeMatchingDatapoints: displayOptions.mergeMatchingDatapoints,
+      showLabelAndUnit: displayOptions.showLabelAndUnit,
     });
     const leftAxis = yAxis.filter((yx) => yx.position === 'left');
     const gridLeft = leftAxis.length
@@ -647,6 +654,19 @@ export class EchartsOptionsService {
     });
   }
 
+  private getClosestDpValueToTargetTime(
+    dpValuesArray: DpValuesItem[],
+    targetTime: number
+  ): DpValuesItem {
+    return dpValuesArray.reduce((prev, curr) =>
+      //should take the value closest to the target time, for realtime the current time would always change
+      Math.abs(new Date(curr.time).getTime() - targetTime) <
+      Math.abs(new Date(prev.time).getTime() - targetTime)
+        ? curr
+        : prev
+    );
+  }
+
   /**
    * This method creates a markPoint on the chart which represents the icon of the alarm or event.
    * @param item Single alarm or event
@@ -676,8 +696,16 @@ export class EchartsOptionsService {
       dpValuesArray,
       creationTime
     );
+    const dpValuesForNewAlarms = this.getClosestDpValueToTargetTime(
+      dpValuesArray,
+      creationTime
+    );
     const lastUpdatedTime = new Date(item['lastUpdated']).getTime();
     const closestDpValueLastUpdated = this.interpolateBetweenTwoDps(
+      dpValuesArray,
+      lastUpdatedTime
+    );
+    const dpValuesForNewAlarmsLastUpdated = this.getClosestDpValueToTargetTime(
       dpValuesArray,
       lastUpdatedTime
     );
@@ -687,7 +715,11 @@ export class EchartsOptionsService {
         {
           coord: [
             item.creationTime,
-            closestDpValue?.values[0]?.min ?? closestDpValue?.values[1] ?? null,
+            closestDpValue?.values[0]?.min ??
+              closestDpValue?.values[1] ??
+              dpValuesForNewAlarms?.values[0]?.min ??
+              dpValuesForNewAlarms?.values[1] ??
+              null,
           ],
           name: item.type,
           itemType: item.type,
@@ -700,7 +732,11 @@ export class EchartsOptionsService {
         {
           coord: [
             item.creationTime,
-            closestDpValue?.values[0]?.min ?? closestDpValue?.values[1] ?? null,
+            closestDpValue?.values[0]?.min ??
+              closestDpValue?.values[1] ??
+              dpValuesForNewAlarms?.values[0]?.min ??
+              dpValuesForNewAlarms?.values[1] ??
+              null,
           ],
           name: item.type,
           itemType: item.type,
@@ -718,6 +754,8 @@ export class EchartsOptionsService {
               item.creationTime,
               closestDpValue?.values[0]?.min ??
                 closestDpValue?.values[1] ??
+                dpValuesForNewAlarms?.values[0]?.min ??
+                dpValuesForNewAlarms?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -733,6 +771,8 @@ export class EchartsOptionsService {
               item.creationTime,
               closestDpValue?.values[0]?.min ??
                 closestDpValue?.values[1] ??
+                dpValuesForNewAlarms?.values[0]?.min ??
+                dpValuesForNewAlarms?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -746,6 +786,8 @@ export class EchartsOptionsService {
               item['lastUpdated'],
               closestDpValueLastUpdated?.values[0]?.min ??
                 closestDpValueLastUpdated?.values[1] ??
+                dpValuesForNewAlarmsLastUpdated?.values[0]?.min ??
+                dpValuesForNewAlarmsLastUpdated?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -761,6 +803,8 @@ export class EchartsOptionsService {
               item['lastUpdated'],
               closestDpValueLastUpdated?.values[0]?.min ??
                 closestDpValueLastUpdated?.values[1] ??
+                dpValuesForNewAlarmsLastUpdated?.values[0]?.min ??
+                dpValuesForNewAlarmsLastUpdated?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -776,6 +820,8 @@ export class EchartsOptionsService {
               item.creationTime,
               closestDpValue?.values[0]?.min ??
                 closestDpValue?.values[1] ??
+                dpValuesForNewAlarms?.values[0]?.min ??
+                dpValuesForNewAlarms?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -791,6 +837,8 @@ export class EchartsOptionsService {
               item.creationTime,
               closestDpValue?.values[0]?.min ??
                 closestDpValue?.values[1] ??
+                dpValuesForNewAlarms?.values[0]?.min ??
+                dpValuesForNewAlarms?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -804,6 +852,8 @@ export class EchartsOptionsService {
               item['lastUpdated'],
               closestDpValueLastUpdated?.values[0]?.min ??
                 closestDpValueLastUpdated?.values[1] ??
+                dpValuesForNewAlarmsLastUpdated?.values[0]?.min ??
+                dpValuesForNewAlarmsLastUpdated?.values[1] ??
                 null,
             ],
             name: item.type,
@@ -819,6 +869,8 @@ export class EchartsOptionsService {
               item['lastUpdated'],
               closestDpValueLastUpdated?.values[0]?.min ??
                 closestDpValueLastUpdated?.values[1] ??
+                dpValuesForNewAlarmsLastUpdated?.values[0]?.min ??
+                dpValuesForNewAlarmsLastUpdated?.values[1] ??
                 null,
             ],
             name: item.type,
