@@ -3,6 +3,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Optional,
   ViewEncapsulation,
 } from '@angular/core';
 import {
@@ -30,11 +31,18 @@ import { Subject } from 'rxjs';
 import {
   DatapointAttributesFormConfig,
   DatapointSelectorModalOptions,
+  KPIDetails,
 } from '@c8y/ngx-components/datapoint-selector';
-import { ActivatedRoute } from '@angular/router';
 import { omit } from 'lodash-es';
 import { aggregationType } from '@c8y/client';
-import { AlarmDetails, EventDetails } from '../alarm-event-selector';
+import {
+  ContextDashboardComponent,
+  WidgetConfigComponent,
+} from '@c8y/ngx-components/context-dashboard';
+import {
+  AlarmDetails,
+  EventDetails,
+} from '@c8y/ngx-components/alarm-event-selector';
 
 @Component({
   selector: 'c8y-datapoints-graph-widget-config',
@@ -81,16 +89,16 @@ export class DatapointsGraphWidgetConfigComponent
     private formBuilder: FormBuilder,
     private form: NgForm,
     private translate: TranslateService,
-    private route: ActivatedRoute
+    @Optional() private widgetConfig: WidgetConfigComponent,
+    @Optional() private dashboardContextComponent: ContextDashboardComponent
   ) {
     this.formGroup = this.initForm();
   }
 
   ngOnInit() {
-    const context = this.route.root.firstChild?.snapshot.data?.['contextData'];
-    if (context?.id) {
-      this.datapointSelectionConfig.contextAsset = context;
-    }
+    this.config?.datapoints?.forEach((dp) =>
+      this.assignContextFromContextDashboard(dp)
+    );
     this.form.form.addControl('config', this.formGroup);
     this.formGroup.patchValue(this.config || {});
     this.formGroup.controls.alarms.setValue(
@@ -169,6 +177,18 @@ export class DatapointsGraphWidgetConfigComponent
     }
   }
 
+  private assignContextFromContextDashboard(datapoint: KPIDetails) {
+    if (!this.dashboardContextComponent?.isDeviceTypeDashboard) {
+      return;
+    }
+    const context = this.widgetConfig?.context;
+    if (context?.id) {
+      const { name, id } = context;
+      datapoint.__target = { name, id };
+      this.datapointSelectionConfig.contextAsset = { id };
+    }
+  }
+
   private checkForMatchingDatapoints(): void {
     const allMatch = this.config?.alarmsEventsConfigs?.every((ae) =>
       this.formGroup.value.datapoints?.some(
@@ -196,6 +216,7 @@ export class DatapointsGraphWidgetConfigComponent
       displayMarkedLine: [true, []],
       displayMarkedPoint: [true, []],
       mergeMatchingDatapoints: [true, []],
+      showLabelAndUnit: [true, []],
       displayDateSelection: [false, []],
       displayAggregationSelection: [false, []],
       widgetInstanceGlobalTimeContext: [false, []],

@@ -3,6 +3,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  Optional,
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
@@ -15,17 +16,15 @@ import {
   DatapointsGraphWidgetTimeProps,
   SeverityType,
   Interval,
+  AlarmDetailsExtended,
+  AlarmOrEventExtended,
+  EventDetailsExtended,
 } from '../model';
 import { DynamicComponentAlertAggregator, gettext } from '@c8y/ngx-components';
 import { cloneDeep } from 'lodash-es';
 import { FormBuilder, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs/internal/Subject';
-import {
-  AlarmDetails,
-  AlarmOrEvent,
-  EventDetails,
-} from '../alarm-event-selector';
 import {
   ALARM_STATUS_LABELS,
   AlarmStatusType,
@@ -35,6 +34,7 @@ import {
 import type { KPIDetails } from '@c8y/ngx-components/datapoint-selector';
 import { ChartsComponent } from '../charts';
 import { TranslateService } from '@ngx-translate/core';
+import { ContextDashboardComponent } from '@c8y/ngx-components/context-dashboard';
 
 @Component({
   selector: 'c8y-datapoints-graph-widget-view',
@@ -45,8 +45,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class DatapointsGraphWidgetViewComponent
   implements OnChanges, OnDestroy
 {
-  events: EventDetails[] = [];
-  alarms: AlarmDetails[] = [];
+  events: EventDetailsExtended[] = [];
+  alarms: AlarmDetailsExtended[] = [];
   AGGREGATION_ICONS = AGGREGATION_ICONS;
   AGGREGATION_TEXTS = AGGREGATION_TEXTS;
   alerts: DynamicComponentAlertAggregator | undefined;
@@ -95,7 +95,8 @@ export class DatapointsGraphWidgetViewComponent
 
   constructor(
     private formBuilder: FormBuilder,
-    private translate: TranslateService
+    private translate: TranslateService,
+    @Optional() private dashboardContextComponent: ContextDashboardComponent
   ) {
     this.timeControlsFormGroup = this.initForm();
     this.timeControlsFormGroup.valueChanges
@@ -103,6 +104,12 @@ export class DatapointsGraphWidgetViewComponent
       .subscribe((value) => {
         this.displayConfig = { ...this.displayConfig, ...value };
       });
+  }
+
+  ngOnInit() {
+    this.displayConfig?.datapoints?.forEach((dp) =>
+      this.assignContextFromContextDashboard(dp)
+    );
   }
 
   ngOnDestroy() {
@@ -137,13 +144,16 @@ export class DatapointsGraphWidgetViewComponent
 
   toggleChart(datapoint: DatapointsGraphKPIDetails): void {
     if (
-      this.displayConfig?.datapoints?.filter((dp) => dp.__active).length === 1
+      this.displayConfig?.datapoints?.filter((dp) => dp.__active).length ===
+        1 &&
+      datapoint.__active
     ) {
       // at least 1 datapoint should be active
       this.hasAtleastOneDatapointActive = false;
       return;
     }
     datapoint.__active = !datapoint.__active;
+    this.hasAtleastOneDatapointActive = true;
     this.displayConfig = { ...this.displayConfig };
   }
 
@@ -158,7 +168,7 @@ export class DatapointsGraphWidgetViewComponent
     this.datapointsOutOfSync.set(dpMatch, true);
   }
 
-  toggleMarkedArea(alarm: AlarmDetails) {
+  toggleMarkedArea(alarm: AlarmDetailsExtended): void {
     this.enabledMarkedAreaAlarmType = alarm.filters.type;
     const params = {
       data: {
@@ -168,7 +178,7 @@ export class DatapointsGraphWidgetViewComponent
     this.chartComponent.onChartClick(params);
   }
 
-  toggleAlarmEventType(alarmOrEvent: AlarmOrEvent): void {
+  toggleAlarmEventType(alarmOrEvent: AlarmOrEventExtended): void {
     if (alarmOrEvent.timelineType === 'ALARM') {
       this.alarms = this.alarms.map((alarm) => {
         if (alarm.filters.type === alarmOrEvent.filters.type) {
@@ -187,13 +197,13 @@ export class DatapointsGraphWidgetViewComponent
     this.displayConfig = { ...this.displayConfig };
   }
 
-  updateAlarmsAndEvents(alarmsEventsConfigs: AlarmOrEvent[]): void {
+  updateAlarmsAndEvents(alarmsEventsConfigs: AlarmOrEventExtended[]): void {
     this.alarms = alarmsEventsConfigs.filter(
       (alarm) => alarm.timelineType === 'ALARM'
-    ) as AlarmDetails[];
+    ) as AlarmDetailsExtended[];
     this.events = alarmsEventsConfigs.filter(
       (event) => event.timelineType === 'EVENT'
-    ) as EventDetails[];
+    ) as EventDetailsExtended[];
     if (
       this.alarms.length === 0 ||
       !this.alarms.find((alarm) => alarm.__active)
@@ -226,6 +236,17 @@ export class DatapointsGraphWidgetViewComponent
       return alarm;
     });
     this.displayConfig = { ...this.displayConfig };
+  }
+
+  private assignContextFromContextDashboard(datapoint: KPIDetails) {
+    if (!this.dashboardContextComponent?.isDeviceTypeDashboard) {
+      return;
+    }
+    const context = this.dashboardContextComponent?.context;
+    if (context?.id) {
+      const { name, id } = context;
+      datapoint.__target = { name, id };
+    }
   }
 
   private initForm() {

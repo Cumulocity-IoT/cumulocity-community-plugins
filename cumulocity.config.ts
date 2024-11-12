@@ -36,6 +36,19 @@ export default {
         path: './src/app/datapoints-graph/datapoints-graph-widget.module.ts',
         description: 'Adds data points graph widget to the shell application',
       },
+      {
+        name: 'Advanced simulator',
+        module: 'AdvancedSimulatorModule',
+        path: './src/app/advanced-simulator/advanced-simulator.module.ts',
+        description: 'Allows to generate simulators with the help of Ai.',
+      },
+      {
+        name: 'Application builder dashboard migration',
+        module: 'AppBuilderDashboardMigrationModule',
+        path: './src/app/app-builder-dashboard-migration/app-builder-dashboard-migration.module.ts',
+        description:
+          'Allows to migrate dashboards generated via application builder to be migrated into cockpit reports.',
+      },
     ],
     versioningMatrix,
   },

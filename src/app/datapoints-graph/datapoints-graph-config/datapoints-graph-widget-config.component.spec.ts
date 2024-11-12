@@ -12,7 +12,11 @@ import {
   FormsModule,
 } from '@c8y/ngx-components';
 import { TimeControlsModule } from '../time-controls';
-import { ChartsComponent } from '../charts';
+import {
+  ChartAlarmsService,
+  ChartEventsService,
+  ChartsComponent,
+} from '../charts';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NgForm, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -25,10 +29,16 @@ import { DatapointSelectorModule } from '@c8y/ngx-components/datapoint-selector'
 import { aggregationType } from '@c8y/client';
 import { AnimationBuilder } from '@angular/animations';
 import { take } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
-import { AlarmEventSelectionListComponent } from '../alarm-event-selector/alarm-event-selection-list/alarm-event-selection-list.component';
+import {
+  ContextDashboardComponent,
+  WidgetConfigComponent,
+} from '@c8y/ngx-components/context-dashboard';
+import {
+  AlarmEventSelectionListComponent,
+  AlarmDetails,
+  EventDetails,
+} from '@c8y/ngx-components/alarm-event-selector';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { AlarmDetails, EventDetails } from '../alarm-event-selector';
 
 describe('DatapointsGraphWidgetConfigComponent', () => {
   let component: DatapointsGraphWidgetConfigComponent;
@@ -44,7 +54,7 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
     __active: true,
   };
   const config: DatapointsGraphWidgetConfig = {
-    datapoints: [],
+    datapoints: [dp],
     dateFrom,
     dateTo,
   };
@@ -85,14 +95,14 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         NgForm,
         { provide: AnimationBuilder, useValue: { build: () => null } },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            root: {
-              firstChild: {
-                snapshot: { data: { contextData: mockContextData } },
-              },
-            },
-          },
+          provide: WidgetConfigComponent,
+          useValue: { context: mockContextData },
+        },
+        { provide: ChartEventsService, useValue: {} },
+        { provide: ChartAlarmsService, useValue: {} },
+        {
+          provide: ContextDashboardComponent,
+          useValue: { isDeviceTypeDashboard: true },
         },
       ],
     });
@@ -111,7 +121,7 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
   });
 
   describe('ngOnInit', () => {
-    it('should set contextAsset for datapoint selector', () => {
+    it('should set contextAsset for datapoint selector when having device type dashboard', () => {
       // when
       component.ngOnInit();
       // then
@@ -138,6 +148,7 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         displayMarkedLine: true,
         displayMarkedPoint: true,
         mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
         interval: 'hours',
         realtime: false,
         widgetInstanceGlobalTimeContext: false,
@@ -186,15 +197,6 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         expect(component.dateSelection).toBe(DATE_SELECTION.DASHBOARD_CONTEXT);
       });
 
-      it('as view and config', () => {
-        // given
-        component.config = { ...component.config, displayDateSelection: true };
-        // when
-        fixture.detectChanges();
-        // then
-        expect(component.dateSelection).toBe(DATE_SELECTION.VIEW_AND_CONFIG);
-      });
-
       it('as config only', () => {
         // when
         fixture.detectChanges();
@@ -237,6 +239,7 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         displayMarkedPoint: true,
         interval: 'hours',
         mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
         realtime: false,
         widgetInstanceGlobalTimeContext: false,
         canDecoupleGlobalTimeContext: false,
@@ -264,18 +267,6 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
       component.dateSelectionChange(DATE_SELECTION.CONFIG);
       // then
       expect(component.formGroup.value.displayDateSelection).toBe(false);
-      expect(component.formGroup.value.widgetInstanceGlobalTimeContext).toBe(
-        false
-      );
-    });
-
-    it('when dateSelection is "view_and_config"', () => {
-      // given
-      fixture.detectChanges();
-      // when
-      component.dateSelectionChange(DATE_SELECTION.VIEW_AND_CONFIG);
-      // then
-      expect(component.formGroup.value.displayDateSelection).toBe(true);
       expect(component.formGroup.value.widgetInstanceGlobalTimeContext).toBe(
         false
       );

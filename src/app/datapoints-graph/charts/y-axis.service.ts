@@ -26,14 +26,25 @@ export class YAxisService {
     const firstOccurrence = new Set<DatapointWithValues>();
 
     return datapointsWithValues.map((dp, index) => {
+      const isDefined = (value: number | undefined) =>
+        value !== null && value !== undefined;
+      const isMatchingDp = (
+        dp1: DatapointWithValues,
+        dp2: DatapointWithValues
+      ) =>
+        dp1.min === dp2.min &&
+        dp1.max === dp2.max &&
+        isDefined(dp1.min) &&
+        isDefined(dp1.max) &&
+        isDefined(dp2.min) &&
+        isDefined(dp2.max);
+
       const matchingDpRange = datapointsWithValues.some(
-        (dp2, index2) =>
-          dp2.min === dp.min && dp2.max === dp.max && index2 < index
+        (dp2, index2) => isMatchingDp(dp, dp2) && index2 < index
       );
 
       const anyMatchingDp = datapointsWithValues.some(
-        (dp2, index2) =>
-          dp2.min === dp.min && dp2.max === dp.max && index2 !== index
+        (dp2, index2) => isMatchingDp(dp, dp2) && index2 !== index
       );
 
       if (
@@ -47,29 +58,31 @@ export class YAxisService {
 
       if (firstOccurrence.has(dp)) {
         datapointsWithValues.forEach((dp2) => {
-          if (dp2.min === dp.min && dp2.max === dp.max) {
+          if (isMatchingDp(dp, dp2)) {
             matchingDpSet.add(dp2);
           }
         });
       }
 
       return {
-        name: YAxisOptions.mergeMatchingDatapoints
-          ? firstOccurrence.has(dp)
-            ? Array.from(matchingDpSet)
-                .map((dp) => `{${dp.__target?.id}${dp.unit}|${dp.unit}}`)
-                .join(' /')
-            : matchingDpRange
-              ? ''
-              : `${dp.label} [${dp.unit}]`
-          : `${dp.label} [${dp.unit}]`,
+        name: YAxisOptions.showLabelAndUnit
+          ? YAxisOptions.mergeMatchingDatapoints
+            ? firstOccurrence.has(dp)
+              ? Array.from(matchingDpSet)
+                  .map((dp) => `{${dp.__target?.id}|${dp.unit}}`)
+                  .join(' /')
+              : matchingDpRange
+                ? ''
+                : `${dp.label} [${dp.unit}]`
+            : `${dp.label} [${dp.unit}]`
+          : '',
         nameLocation: 'middle',
         nameGap: 20,
         nameTextStyle: {
           // add rich text to support multiple colors for different dp units
           rich: {
             ...Array.from(matchingDpSet).reduce((acc, dp) => {
-              const accKey = `${dp.__target?.id}${dp.unit}`;
+              const accKey = `${dp.__target?.id}`;
               acc[accKey] = {
                 color: dp.color,
               };
@@ -91,7 +104,7 @@ export class YAxisService {
         },
         axisLabel: {
           fontSize: 10,
-          show: !matchingDpRange,
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
           formatter: (val) => {
             const { min, max } = dp || {};
             const range =
@@ -114,7 +127,7 @@ export class YAxisService {
         position: YAxisPlacement.get(dp)?.position,
         offset: YAxisPlacement.get(dp)?.offset,
         axisTick: {
-          show: !matchingDpRange,
+          show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
         },
         axisPointer: {
           show: false,

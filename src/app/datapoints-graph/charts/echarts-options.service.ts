@@ -22,9 +22,11 @@ import type { TopLevelFormatterParams } from 'echarts/types/src/component/toolti
 import { AlarmStatus, IAlarm, IEvent, SeverityType } from '@c8y/client';
 import { ICONS_MAP } from './svg-icons.model';
 import { CustomSeriesOptions } from './chart.model';
-import { AlarmSeverityToIconPipe } from '../alarms-filtering/alarm-severity-to-icon.pipe';
-import { AlarmSeverityToLabelPipe } from '../alarms-filtering/alarm-severity-to-label.pipe';
 import { Router } from '@angular/router';
+import {
+  AlarmSeverityToIconPipe,
+  AlarmSeverityToLabelPipe,
+} from '@c8y/ngx-components/alarms';
 
 type TooltipPositionCallback = (
   point: [number, number], // position of mouse in chart [X, Y]; 0,0 is top left corner
@@ -36,6 +38,8 @@ type TooltipPositionCallback = (
     viewSize: [number, number]; // size of the chart
   } | null // size of chart
 ) => Partial<Record<'top' | 'bottom' | 'left' | 'right', number>>;
+
+const INDEX_HTML = '/index.html';
 
 @Injectable()
 export class EchartsOptionsService {
@@ -62,11 +66,13 @@ export class EchartsOptionsService {
       displayMarkedLine: boolean;
       displayMarkedPoint: boolean;
       mergeMatchingDatapoints: boolean;
+      showLabelAndUnit: boolean;
     }
   ): EChartsOption {
     const yAxis = this.yAxisService.getYAxis(datapointsWithValues, {
       showSplitLines: showSplitLines.YAxis,
       mergeMatchingDatapoints: displayOptions.mergeMatchingDatapoints,
+      showLabelAndUnit: displayOptions.showLabelAndUnit,
     });
     const leftAxis = yAxis.filter((yx) => yx.position === 'left');
     const gridLeft = leftAxis.length
@@ -532,10 +538,10 @@ export class EchartsOptionsService {
     value += `<li class="p-t-4 p-b-4 d-flex separator-bottom text-no-wrap"><label class="text-label-small m-b-0 m-r-8">Last Updated</label><span class="small m-l-auto">${this.datePipe.transform(alarm['lastUpdated'])}</span></li>`;
     const exists = await this.alarmRouteExists();
     if (exists) {
-      const currentUrl = this.router.url;
-      const baseUrlIndex = currentUrl.indexOf('/index.html#');
-      const baseUrl = currentUrl.substring(0, baseUrlIndex + 11);
-      value += `<li class="p-t-4 p-b-4 d-flex separator-bottom text-no-wrap"><label class="text-label-small m-b-0 m-r-8">Link</label><span class="small m-l-auto"><a href = "${baseUrl}/alarms/${alarm.id}">Alarm Details</a></span></li>`;
+      const currentUrl = window.location.href;
+      const baseUrlIndex = currentUrl.indexOf(INDEX_HTML);
+      const baseUrl = currentUrl.substring(0, baseUrlIndex + INDEX_HTML.length);
+      value += `<li class="p-t-4 p-b-4 d-flex separator-bottom text-no-wrap"><label class="text-label-small m-b-0 m-r-8">Link</label><span class="small m-l-auto"><a href="${baseUrl}#/alarms/${alarm.id}">Alarm Details</a></span></li>`;
     }
     value += `<li class="p-t-4 p-b-4 d-flex text-no-wrap"><label class="text-label-small m-b-0 m-r-8">Alarm count</label><span class="small m-l-auto"><span class="badge badge-info">${alarm.count}</span></span></li>`;
     value += `</ul>`;

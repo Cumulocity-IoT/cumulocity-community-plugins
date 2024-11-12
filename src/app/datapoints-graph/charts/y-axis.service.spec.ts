@@ -57,6 +57,7 @@ describe('YAxisService', () => {
     const YAxis: YAXisOption = service.getYAxis([dp1], {
       showSplitLines: false,
       mergeMatchingDatapoints: true,
+      showLabelAndUnit: true,
     })[0];
     // when
     const YAxisValue = (YAxis.axisLabel as any).formatter(1_400_000_000);
@@ -69,6 +70,7 @@ describe('YAxisService', () => {
     const YAxis = service.getYAxis([dp1], {
       showSplitLines: false,
       mergeMatchingDatapoints: false,
+      showLabelAndUnit: true,
     })[0];
     // then
     expect(JSON.stringify(YAxis)).toEqual(
@@ -91,7 +93,7 @@ describe('YAxisService', () => {
         axisLabel: {
           fontSize: 10,
           show: true,
-          formatter: (val) =>
+          formatter: (val: any) =>
             new Intl.NumberFormat('en-GB', {
               notation: 'compact',
               compactDisplay: 'short',
@@ -121,6 +123,7 @@ describe('YAxisService', () => {
     const YAxis = service.getYAxis([{ ...dp1, min: -100, max: 100 }], {
       showSplitLines: false,
       mergeMatchingDatapoints: true,
+      showLabelAndUnit: true,
     })[0];
     // then
     expect(YAxis.min).toEqual(-100);
@@ -133,6 +136,7 @@ describe('YAxisService', () => {
       const YAxis = service.getYAxis([dp1, dp2, dp3], {
         showSplitLines: false,
         mergeMatchingDatapoints: true,
+        showLabelAndUnit: true,
       });
       // then
       expect(YAxis[0].position).toBe('left');
@@ -147,7 +151,11 @@ describe('YAxisService', () => {
       // when
       const YAxis = service.getYAxis(
         [{ ...dp1, yAxisType: 'left' }, { ...dp2, yAxisType: 'left' }, dp3],
-        { showSplitLines: false, mergeMatchingDatapoints: true }
+        {
+          showSplitLines: false,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(YAxis[0].position).toBe('left');
@@ -166,7 +174,11 @@ describe('YAxisService', () => {
           { ...dp2, yAxisType: 'right' },
           { ...dp3, yAxisType: 'left' },
         ],
-        { showSplitLines: false, mergeMatchingDatapoints: true }
+        {
+          showSplitLines: false,
+          mergeMatchingDatapoints: true,
+          showLabelAndUnit: true,
+        }
       );
       // then
       expect(YAxis[0].position).toBe('left');

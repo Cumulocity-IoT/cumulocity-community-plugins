@@ -56,6 +56,8 @@ async function loadConfigComponent() {
             },
             displaySettings: {
               globalTimeContext: true,
+              globalAggregationContext: true,
+              globalRealtimeContext: true,
             },
           } as ContextWidgetConfig,
           errorStrategy: DynamicComponentErrorStrategy.CUSTOM,

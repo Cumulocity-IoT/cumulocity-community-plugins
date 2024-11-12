@@ -5,13 +5,22 @@ import {
   KPIDetails,
 } from '@c8y/ngx-components/datapoint-selector';
 import { DateTimeContext, gettext } from '@c8y/ngx-components';
-import { aggregationType, IMeasurement, ISeries, Severity } from '@c8y/client';
+import {
+  aggregationType,
+  AlarmStatusType,
+  IMeasurement,
+  ISeries,
+  Severity,
+} from '@c8y/client';
 import type {
   BarSeriesOption,
   LineSeriesOption,
   ScatterSeriesOption,
 } from 'echarts';
-import { AlarmOrEvent } from '../alarm-event-selector';
+import {
+  AlarmDetails,
+  EventDetails,
+} from '@c8y/ngx-components/alarm-event-selector';
 import { TooltipFormatterCallback } from 'echarts/types/src/util/types';
 import { TopLevelFormatterParams } from 'echarts/types/src/component/tooltip/TooltipModel';
 
@@ -22,7 +31,7 @@ export type DatapointsGraphKPIDetails = KPIDetails & {
 
 export type DatapointsGraphWidgetConfig = {
   datapoints?: DatapointsGraphKPIDetails[] | null;
-  alarmsEventsConfigs?: AlarmOrEvent[];
+  alarmsEventsConfigs?: AlarmOrEventExtended[];
   date?: DateTimeContext;
   displayDateSelection?: boolean | null;
   displayAggregationSelection?: boolean | null;
@@ -30,6 +39,7 @@ export type DatapointsGraphWidgetConfig = {
   displayMarkedLine?: boolean;
   displayMarkedPoint?: boolean;
   mergeMatchingDatapoints?: boolean;
+  showLabelAndUnit?: boolean;
   dateFrom?: Date | null;
   dateTo?: Date | null;
   activeAlarmTypesOutOfRange?: string[];
@@ -39,6 +49,21 @@ export type DatapointsGraphWidgetConfig = {
   yAxisSplitLines?: boolean | null;
   xAxisSplitLines?: boolean | null;
 };
+
+export type AlarmDetailsExtended = AlarmDetails & {
+  __hidden?: boolean;
+  __severity?: SeverityType[];
+  __status?: AlarmStatusType[];
+};
+
+export type EventDetailsExtended = EventDetails & {
+  __hidden?: boolean;
+};
+
+/**
+ * @description: Extended AlarmOrEvent type which includes properties from the incoming alarms/events. This interface can be used when the expected data can be either events or alarms.
+ */
+export type AlarmOrEventExtended = AlarmDetailsExtended | EventDetailsExtended;
 
 export type DatapointsGraphWidgetTimeProps = Partial<
   Pick<
@@ -189,6 +214,7 @@ export type DatapointRealtimeMeasurements = {
 export type YAxisOptions = {
   showSplitLines: boolean;
   mergeMatchingDatapoints: boolean;
+  showLabelAndUnit: boolean;
 };
 
 export interface SeriesDatapointInfo {
