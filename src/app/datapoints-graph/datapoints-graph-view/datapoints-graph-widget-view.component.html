@@ -1,6 +1,9 @@
 <div class="p-l-16 p-r-16">
   <div class="d-flex gap-16 a-i-start">
-    <div class="btn-group btn-group-sm flex-no-shrink">
+    <div
+      class="btn-group btn-group-sm flex-no-shrink"
+      *ngIf="!displayConfig?.widgetInstanceGlobalTimeContext"
+    >
       <button
         type="button"
         class="btn btn-default"

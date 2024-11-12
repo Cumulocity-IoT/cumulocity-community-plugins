@@ -110,8 +110,9 @@ export class YAxisService {
             const range =
               min !== undefined && max !== undefined ? max - min : undefined;
 
-            if (range !== undefined && range < 1) {
-              return val.toFixed(2); // Format to two decimal places for narrow ranges
+            if (range !== undefined) {
+              const decimalPlaces = this.getDecimalPlaces(range);
+              return val.toFixed(decimalPlaces);
             }
 
             return new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
@@ -139,6 +140,15 @@ export class YAxisService {
         ...(dp.max && { max: dp.max }),
       };
     });
+  }
+
+  private getDecimalPlaces(num: number): number {
+    const numStr = num.toString();
+    const decimalIndex = numStr.indexOf('.');
+    if (decimalIndex === -1) {
+      return 0;
+    }
+    return numStr.length - decimalIndex - 1;
   }
 
   private getYAxisPlacement(
