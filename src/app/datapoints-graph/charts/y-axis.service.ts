@@ -106,11 +106,8 @@ export class YAxisService {
           fontSize: 10,
           show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
           formatter: (val) => {
-            const { min, max } = dp || {};
-            const range =
-              min !== undefined && max !== undefined ? max - min : undefined;
-
-            if (range !== undefined) {
+            if (dp.min != undefined && dp.max != undefined) {
+              const range = dp.max - dp.min
               const decimalPlaces = this.getDecimalPlaces(range);
               return val.toFixed(decimalPlaces);
             }
