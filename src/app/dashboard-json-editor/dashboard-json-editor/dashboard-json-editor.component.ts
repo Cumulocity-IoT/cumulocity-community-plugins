@@ -1,12 +1,14 @@
 import { ContextDashboard } from '@c8y/ngx-components/context-dashboard/context-dashboard.model';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {
   CommonModule,
+  FormsModule,
   gettext,
   ModalLabels,
   ModalModule,
 } from '@c8y/ngx-components';
+import { EditorComponent } from '@c8y/ngx-components/editor';
 
 @Component({
   selector: 'c8y-dashboard-json-editor',
@@ -17,16 +19,21 @@ import {
       [labels]="labels"
       (onClose)="onDismiss()"
     >
-      <div>
-        <pre>{{ dashboard | json }}</pre>
+      <div [ngStyle]="{ height: '500px' }" class="d-flex">
+        <c8y-editor
+          class="flex-grow"
+          [(ngModel)]="valueString"
+          monacoEditorMarkerValidator
+        ></c8y-editor>
       </div>
     </c8y-modal>
   `,
   standalone: true,
-  imports: [ModalModule, CommonModule],
+  imports: [ModalModule, CommonModule, EditorComponent, FormsModule],
 })
-export class DashboardJsonEditorComponent {
+export class DashboardJsonEditorComponent implements OnInit {
   dashboard!: ContextDashboard;
+  valueString = '';
   labels: ModalLabels = { ok: gettext('Close') };
 
   result: Promise<boolean> = new Promise((resolve) => {
@@ -35,6 +42,10 @@ export class DashboardJsonEditorComponent {
 
   private _close: ((value: boolean) => void) | undefined;
   private modalRef = inject(BsModalRef);
+
+  ngOnInit(): void {
+    this.valueString = JSON.stringify(this.dashboard);
+  }
 
   onDismiss() {
     this._close!(true);
