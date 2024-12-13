@@ -18,6 +18,7 @@ export default {
       'sag-pkg-community-plugins': [
         'ExampleWidgetPluginModule',
         'DatapointsGraphWidgetModule',
+        'DashboardJsonEditorModule',
       ],
     },
     package: 'plugin',
@@ -48,6 +49,12 @@ export default {
         path: './src/app/app-builder-dashboard-migration/app-builder-dashboard-migration.module.ts',
         description:
           'Allows to migrate dashboards generated via application builder to be migrated into cockpit reports.',
+      },
+      {
+        name: 'Dashboard JSON editor',
+        module: 'DashboardJsonEditorModule',
+        path: './src/app/dashboard-json-editor/dashboard-json-editor.module.ts',
+        description: 'Allows to edit dashboard JSON in the UI.',
       },
     ],
     versioningMatrix,
