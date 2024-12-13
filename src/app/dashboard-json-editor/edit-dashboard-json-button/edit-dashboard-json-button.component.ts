@@ -50,7 +50,8 @@ export class EditDashboardJsonButtonComponent implements OnInit {
         ignoreBackdropClick: true,
         keyboard: false,
       }).content as DashboardJsonEditorComponent;
-      await modalRef.result;
+      const dashboardJSON = await modalRef.result;
+      console.log(dashboardJSON);
     } catch (_) {
       return;
     }

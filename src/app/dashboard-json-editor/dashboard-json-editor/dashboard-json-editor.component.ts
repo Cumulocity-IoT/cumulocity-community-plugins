@@ -17,7 +17,8 @@ import { EditorComponent } from '@c8y/ngx-components/editor';
       [title]="'Edit dashboard JSON'"
       [headerClasses]="'dialog-header'"
       [labels]="labels"
-      (onClose)="onDismiss()"
+      (onClose)="onSave()"
+      (onDismiss)="onDismiss()"
     >
       <div [ngStyle]="{ height: '500px' }" class="d-flex">
         <c8y-editor
@@ -34,21 +35,25 @@ import { EditorComponent } from '@c8y/ngx-components/editor';
 export class DashboardJsonEditorComponent implements OnInit {
   dashboard!: ContextDashboard;
   valueString = '';
-  labels: ModalLabels = { ok: gettext('Close') };
+  labels: ModalLabels = { ok: gettext('Save'), cancel: gettext('Cancel') };
 
-  result: Promise<boolean> = new Promise((resolve) => {
+  result: Promise<string> = new Promise((resolve) => {
     this._close = resolve;
   });
 
-  private _close: ((value: boolean) => void) | undefined;
+  private _close: ((value: string) => void) | undefined;
   private modalRef = inject(BsModalRef);
 
   ngOnInit(): void {
     this.valueString = JSON.stringify(this.dashboard);
   }
 
+  onSave() {
+    this._close!(this.valueString);
+    this.modalRef.hide();
+  }
+
   onDismiss() {
-    this._close!(true);
     this.modalRef.hide();
   }
 }
