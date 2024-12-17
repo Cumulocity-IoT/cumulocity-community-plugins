@@ -2,6 +2,7 @@ import { ContextDashboard } from '@c8y/ngx-components/context-dashboard/context-
 import {
   Component,
   inject,
+  OnDestroy,
   OnInit,
   signal,
   WritableSignal,
@@ -18,6 +19,9 @@ import { EditorComponent } from '@c8y/ngx-components/editor';
 import kpiSchema from '../kpi_config.json';
 import dashboardSchema from '../dashboard_config.json';
 import Ajv from 'ajv';
+import { debounceTime } from 'rxjs';
+import { Subject } from 'rxjs/internal/Subject';
+import { takeUntil } from 'rxjs/operators';
 
 function replacer(_key: any, value: any) {
   // Filtering out properties
@@ -45,13 +49,11 @@ export const Schemas = {
       <div [ngStyle]="{ height: '350px' }" class="d-flex">
         <c8y-editor
           class="flex-grow"
-          [(ngModel)]="valueString"
+          [ngModel]="valueString"
+          (ngModelChange)="dashboardJSONChange($event)"
           monacoEditorMarkerValidator
         ></c8y-editor>
       </div>
-      <button class="btn btn-default" type="button" (click)="validate()">
-        Validate
-      </button>
       <div *ngIf="dashboardErrors().length">
         <strong>Dashboard errors:</strong>
         <p *ngFor="let error of dashboardErrors()">{{ error }}</p>
@@ -65,7 +67,7 @@ export const Schemas = {
   standalone: true,
   imports: [ModalModule, CommonModule, EditorComponent, FormsModule],
 })
-export class DashboardJsonEditorComponent implements OnInit {
+export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   dashboard!: ContextDashboard;
   valueString = '';
   labels: ModalLabels = { ok: gettext('Save'), cancel: gettext('Cancel') };
@@ -80,14 +82,30 @@ export class DashboardJsonEditorComponent implements OnInit {
   dashboardErrors: WritableSignal<string[]> = signal([]);
   widgetErrors: WritableSignal<string[]> = signal([]);
 
+  private validate$ = new Subject<string>();
   private _close: ((value: string) => void) | undefined;
   private modalRef = inject(BsModalRef);
+  private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
     this.valueString = JSON.stringify(this.dashboard);
 
     this.ajv.addSchema(kpiSchema, Schemas.kpiWidget);
     this.ajv.addSchema(dashboardSchema, Schemas.dashboard);
+
+    this.validate$
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(() => this.validate());
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  dashboardJSONChange(value: string) {
+    this.valueString = value;
+    this.validate$.next(value);
   }
 
   onSave() {
