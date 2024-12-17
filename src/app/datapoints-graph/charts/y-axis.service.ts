@@ -105,11 +105,18 @@ export class YAxisService {
         axisLabel: {
           fontSize: 10,
           show: !matchingDpRange || !YAxisOptions.mergeMatchingDatapoints,
-          formatter: (val) =>
-            new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
+          formatter: (val) => {
+            if (dp.min != undefined && dp.max != undefined) {
+              const range = dp.max - dp.min
+              const decimalPlaces = this.getDecimalPlaces(range);
+              return val.toFixed(decimalPlaces);
+            }
+
+            return new Intl.NumberFormat(this.intlNumberFormatCompliantLocale, {
               notation: 'compact',
               compactDisplay: 'short',
-            }).format(val),
+            }).format(val);
+          },
         },
         splitLine: {
           show: YAxisOptions.showSplitLines && !matchingDpRange,
@@ -130,6 +137,15 @@ export class YAxisService {
         ...(dp.max && { max: dp.max }),
       };
     });
+  }
+
+  private getDecimalPlaces(num: number): number {
+    const numStr = num.toString();
+    const decimalIndex = numStr.indexOf('.');
+    if (decimalIndex === -1) {
+      return 0;
+    }
+    return numStr.length - decimalIndex - 1;
   }
 
   private getYAxisPlacement(

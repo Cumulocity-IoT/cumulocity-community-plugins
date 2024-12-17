@@ -197,15 +197,6 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         expect(component.dateSelection).toBe(DATE_SELECTION.DASHBOARD_CONTEXT);
       });
 
-      it('as view and config', () => {
-        // given
-        component.config = { ...component.config, displayDateSelection: true };
-        // when
-        fixture.detectChanges();
-        // then
-        expect(component.dateSelection).toBe(DATE_SELECTION.VIEW_AND_CONFIG);
-      });
-
       it('as config only', () => {
         // when
         fixture.detectChanges();
@@ -276,18 +267,6 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
       component.dateSelectionChange(DATE_SELECTION.CONFIG);
       // then
       expect(component.formGroup.value.displayDateSelection).toBe(false);
-      expect(component.formGroup.value.widgetInstanceGlobalTimeContext).toBe(
-        false
-      );
-    });
-
-    it('when dateSelection is "view_and_config"', () => {
-      // given
-      fixture.detectChanges();
-      // when
-      component.dateSelectionChange(DATE_SELECTION.VIEW_AND_CONFIG);
-      // then
-      expect(component.formGroup.value.displayDateSelection).toBe(true);
       expect(component.formGroup.value.widgetInstanceGlobalTimeContext).toBe(
         false
       );

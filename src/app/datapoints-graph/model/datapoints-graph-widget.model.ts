@@ -74,7 +74,6 @@ export type DatapointsGraphWidgetTimeProps = Partial<
 
 export enum DATE_SELECTION {
   CONFIG = 'config',
-  VIEW_AND_CONFIG = 'view_and_config',
   DASHBOARD_CONTEXT = 'dashboard_context',
 }
 
