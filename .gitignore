@@ -47,3 +47,6 @@ Thumbs.db
 
 # Cypress videos
 cypress/videos
+
+# Exclude auto-generated locale files
+/locales
