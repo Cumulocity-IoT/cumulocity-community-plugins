@@ -53,6 +53,22 @@ export class EditDashboardJsonButtonComponent implements OnInit {
       }).content as DashboardJsonEditorComponent;
       const dashboardJSON = await modalRef.result;
       console.log(dashboardJSON);
+
+      // TODO: find better way to refresh dashboard
+      const route = this.activatedRoute.parent?.snapshot.url
+        .map((segment) => segment.path)
+        .join('/') as string;
+      await this.router.navigateByUrl(route);
+
+      const context = this.contextData.context.split('/')[0] as
+        | 'device'
+        | 'group';
+      await this.router.navigateByUrl(
+        `${context}/${this.contextData.contextData.id}/dashboard/${this.dashboardMO.id}`,
+        {
+          replaceUrl: true,
+        }
+      );
     } catch (_) {
       return;
     }
