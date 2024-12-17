@@ -43,7 +43,8 @@ export class EditDashboardJsonButtonComponent implements OnInit {
       const modalRef = this.modalService.show(DashboardJsonEditorComponent, {
         class: 'modal-lg',
         initialState: {
-          dashboard: this.dashboardMO.c8y_Dashboard,
+          dashboardMO: this.dashboardMO,
+          currentContext: this.contextData,
         },
         ariaDescribedby: 'modal-body',
         ariaLabelledBy: 'modal-title',

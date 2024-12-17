@@ -10,6 +10,7 @@ import {
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import {
   CommonModule,
+  ContextData,
   FormsModule,
   gettext,
   ModalLabels,
@@ -22,6 +23,11 @@ import Ajv from 'ajv';
 import { debounceTime } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
+import {
+  ContextDashboardManagedObject,
+  ContextDashboardService,
+} from '@c8y/ngx-components/context-dashboard';
+import { cloneDeep } from 'lodash-es';
 
 function replacer(_key: any, value: any) {
   // Filtering out properties
@@ -68,7 +74,8 @@ export const Schemas = {
   imports: [ModalModule, CommonModule, EditorComponent, FormsModule],
 })
 export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
-  dashboard!: ContextDashboard;
+  dashboardMO!: ContextDashboardManagedObject;
+  currentContext!: ContextData;
   valueString = '';
   labels: ModalLabels = { ok: gettext('Save'), cancel: gettext('Cancel') };
 
@@ -85,10 +92,11 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   private validate$ = new Subject<string>();
   private _close: ((value: string) => void) | undefined;
   private modalRef = inject(BsModalRef);
+  private contextDashboardService = inject(ContextDashboardService);
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.valueString = JSON.stringify(this.dashboard);
+    this.valueString = JSON.stringify(this.dashboardMO.c8y_Dashboard);
 
     this.ajv.addSchema(kpiSchema, Schemas.kpiWidget);
     this.ajv.addSchema(dashboardSchema, Schemas.dashboard);
@@ -108,7 +116,8 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
     this.validate$.next(value);
   }
 
-  onSave() {
+  async onSave() {
+    await this.updateDashboard();
     this._close!(this.valueString);
     this.modalRef.hide();
   }
@@ -144,6 +153,22 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
 
       validate?.(configWithoutNulls);
       this.widgetErrors.set(this.ajv.errorsText(validate?.errors).split(','));
+    }
+  }
+
+  private async updateDashboard() {
+    try {
+      const dashboardMO: ContextDashboardManagedObject = cloneDeep(
+        this.dashboardMO
+      );
+      dashboardMO.c8y_Dashboard = JSON.parse(this.valueString);
+
+      await this.contextDashboardService.update(
+        dashboardMO,
+        this.currentContext
+      );
+    } catch (_) {
+      // intended empty
     }
   }
 }
