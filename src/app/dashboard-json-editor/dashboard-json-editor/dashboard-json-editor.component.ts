@@ -23,11 +23,7 @@ import Ajv from 'ajv';
 import { debounceTime } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
-import {
-  ContextDashboardManagedObject,
-  ContextDashboardService,
-} from '@c8y/ngx-components/context-dashboard';
-import { cloneDeep } from 'lodash-es';
+import { ContextDashboardManagedObject } from '@c8y/ngx-components/context-dashboard';
 
 function replacer(_key: any, value: any) {
   // Filtering out properties
@@ -92,7 +88,6 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   private validate$ = new Subject<string>();
   private _close: ((value: string) => void) | undefined;
   private modalRef = inject(BsModalRef);
-  private contextDashboardService = inject(ContextDashboardService);
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -117,7 +112,6 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   }
 
   async onSave() {
-    await this.updateDashboard();
     this._close!(this.valueString);
     this.modalRef.hide();
   }
@@ -153,22 +147,6 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
 
       validate?.(configWithoutNulls);
       this.widgetErrors.set(this.ajv.errorsText(validate?.errors).split(','));
-    }
-  }
-
-  private async updateDashboard() {
-    try {
-      const dashboardMO: ContextDashboardManagedObject = cloneDeep(
-        this.dashboardMO
-      );
-      dashboardMO.c8y_Dashboard = JSON.parse(this.valueString);
-
-      await this.contextDashboardService.update(
-        dashboardMO,
-        this.currentContext
-      );
-    } catch (_) {
-      // intended empty
     }
   }
 }

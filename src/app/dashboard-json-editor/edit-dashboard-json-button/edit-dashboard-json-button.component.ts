@@ -7,9 +7,13 @@ import {
   IconDirective,
 } from '@c8y/ngx-components';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContextDashboardManagedObject } from '@c8y/ngx-components/context-dashboard';
+import {
+  ContextDashboardManagedObject,
+  ContextDashboardService,
+} from '@c8y/ngx-components/context-dashboard';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DashboardJsonEditorComponent } from '../dashboard-json-editor/dashboard-json-editor.component';
+import { cloneDeep } from 'lodash-es';
 
 @Component({
   selector: 'c8y-edit-dashboard-json-button',
@@ -37,6 +41,7 @@ export class EditDashboardJsonButtonComponent implements OnInit {
   private router = inject(Router);
   private contextRouteService = inject(ContextRouteService);
   private modalService = inject(BsModalService);
+  private contextDashboardService = inject(ContextDashboardService);
 
   async editDashboardJSON() {
     try {
@@ -52,6 +57,12 @@ export class EditDashboardJsonButtonComponent implements OnInit {
         keyboard: false,
       }).content as DashboardJsonEditorComponent;
       const dashboardJSON = await modalRef.result;
+
+      if (this.dashboardMO) {
+        await this.updateDashboard(dashboardJSON);
+      } else {
+        // TODO: create new dashboard
+      }
       console.log(dashboardJSON);
 
       // TODO: find better way to refresh dashboard
@@ -93,5 +104,18 @@ export class EditDashboardJsonButtonComponent implements OnInit {
       route = route.firstChild;
     }
     return route;
+  }
+
+  private async updateDashboard(updatedDashboard: string) {
+    try {
+      const dashboardMO: ContextDashboardManagedObject = cloneDeep(
+        this.dashboardMO
+      );
+      dashboardMO.c8y_Dashboard = JSON.parse(updatedDashboard);
+
+      await this.contextDashboardService.update(dashboardMO, this.contextData);
+    } catch (_) {
+      // intended empty
+    }
   }
 }
