@@ -14,6 +14,7 @@ import {
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { DashboardJsonEditorComponent } from '../dashboard-json-editor/dashboard-json-editor.component';
 import { cloneDeep } from 'lodash-es';
+import { IManagedObject } from '@c8y/client';
 
 @Component({
   selector: 'c8y-edit-dashboard-json-button',
@@ -61,9 +62,22 @@ export class EditDashboardJsonButtonComponent implements OnInit {
       if (this.dashboardMO) {
         await this.updateDashboard(dashboardJSON);
       } else {
-        // TODO: create new dashboard
+        // assuming that dashboard was pasted and saved, so new dashboard should be created
+        this.contextDashboardService.copyClipboard = {
+          dashboardId: '0', // TODO: how to get id of dashboardMO? currently we edit dashboard only (ContextDashboard)
+          dashboard: JSON.parse(dashboardJSON),
+          context: cloneDeep({
+            context: this.contextData.context,
+            // contextData: {}, TODO: how to get contextData of origin dashboard? it is needed to override e.g. datapooints target
+            contextData: { name: '2xp 2xn #1', id: '25103612785' },
+          }),
+        };
+
+        await this.contextDashboardService.pasteDashboard({
+          context: this.contextData.context,
+          contextData: this.contextData.contextData as IManagedObject,
+        });
       }
-      console.log(dashboardJSON);
 
       // TODO: find better way to refresh dashboard
       const route = this.activatedRoute.parent?.snapshot.url

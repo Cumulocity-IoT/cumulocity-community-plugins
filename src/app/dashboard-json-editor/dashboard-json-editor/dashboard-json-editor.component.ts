@@ -91,7 +91,7 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.valueString = JSON.stringify(this.dashboardMO.c8y_Dashboard);
+    this.valueString = JSON.stringify(this.dashboardMO?.c8y_Dashboard) || '{}';
 
     this.ajv.addSchema(kpiSchema, Schemas.kpiWidget);
     this.ajv.addSchema(dashboardSchema, Schemas.dashboard);
