@@ -1,0 +1,122 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "IIdentified": {
+            "additionalProperties": {},
+            "properties": {
+                "id": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "KPIDetails": {
+            "additionalProperties": {},
+            "properties": {
+                "__active": {
+                    "type": "boolean"
+                },
+                "__target": {
+                    "$ref": "#/definitions/IIdentified"
+                },
+                "__template": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "color": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fragment": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "lineType": {
+                    "type": "string"
+                },
+                "max": {
+                    "type": "number"
+                },
+                "min": {
+                    "type": "number"
+                },
+                "orientation": {
+                    "type": "string"
+                },
+                "redRangeMax": {
+                    "type": "number"
+                },
+                "redRangeMin": {
+                    "type": "number"
+                },
+                "renderType": {
+                    "type": "string"
+                },
+                "series": {
+                    "type": "string"
+                },
+                "target": {
+                    "type": "number"
+                },
+                "unit": {
+                    "type": "string"
+                },
+                "yAxisType": {
+                    "type": "string"
+                },
+                "yellowRangeMax": {
+                    "type": "number"
+                },
+                "yellowRangeMin": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "fragment",
+                "series"
+            ],
+            "type": "object"
+        }
+    },
+    "properties": {
+        "datapoints": {
+            "items": {
+                "$ref": "#/definitions/KPIDetails"
+            },
+            "type": "array"
+        },
+        "fontSize": {
+            "type": "number"
+        },
+        "icon": {
+            "type": "string"
+        },
+        "numberOfDecimalPlaces": {
+            "type": "number"
+        },
+        "showIcon": {
+            "type": "boolean"
+        },
+        "showTimestamp": {
+            "type": "boolean"
+        },
+        "showTrend": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "datapoints"
+    ],
+    "type": "object"
+}
+

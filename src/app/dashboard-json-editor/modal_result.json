@@ -1,0 +1,261 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "ContextDashboard": {
+            "additionalProperties": false,
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "c8y_IsNavigatorNode": {
+                    "additionalProperties": true,
+                    "properties": {},
+                    "type": "object"
+                },
+                "children": {
+                    "additionalProperties": {
+                        "$ref": "#/definitions/Widget"
+                    },
+                    "type": "object"
+                },
+                "classes": {
+                    "additionalProperties": {
+                        "type": "boolean"
+                    },
+                    "type": "object"
+                },
+                "columns": {
+                    "description": "The amount of columns on that dashboard.\nCan be freely chosen, but product uses either 12 or 24.",
+                    "type": "number"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "deviceType": {
+                    "type": "boolean"
+                },
+                "deviceTypeValue": {
+                    "type": "string"
+                },
+                "global": {
+                    "type": "boolean"
+                },
+                "globalRolesIds": {
+                    "$ref": "#/definitions/DashboardGlobalRoles"
+                },
+                "historyDescription": {
+                    "$ref": "#/definitions/DashboardHistoryDescription"
+                },
+                "icon": {
+                    "type": "string"
+                },
+                "isFrozen": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "priority": {
+                    "type": "number"
+                },
+                "translateWidgetTitle": {
+                    "type": "boolean"
+                },
+                "widgetClasses": {
+                    "additionalProperties": {
+                        "type": "boolean"
+                    },
+                    "type": "object"
+                },
+                "widgetMargin": {
+                    "type": "number"
+                }
+            },
+            "type": "object"
+        },
+        "DashboardGlobalRoles": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": "array"
+                },
+                {
+                    "const": "all",
+                    "type": "string"
+                }
+            ]
+        },
+        "DashboardHistoryDescription": {
+            "additionalProperties": false,
+            "description": "Object describing changes applied to dashboard settings and its widgets. Used to display user-friendly change log.",
+            "properties": {
+                "changeType": {
+                    "description": "Indicates type of dashboard change (or creation).",
+                    "enum": [
+                        "create",
+                        "reset",
+                        "update"
+                    ],
+                    "type": "string"
+                },
+                "dashboardSettingChanges": {
+                    "description": "List of dashboard settings that has been changed.",
+                    "items": {
+                        "enum": [
+                            "c8y_IsNavigatorNode",
+                            "classes",
+                            "globalRolesIds",
+                            "icon",
+                            "name",
+                            "priority",
+                            "translateWidgetTitle",
+                            "widgetClasses",
+                            "widgetMargin"
+                        ],
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "deviceType": {
+                    "description": "True if dashboard is typed dashboard, false if it's not.",
+                    "type": "boolean"
+                },
+                "restored": {
+                    "description": "String used to display the date from which the state was restored.",
+                    "type": "string"
+                },
+                "widgetChanges": {
+                    "additionalProperties": false,
+                    "description": "Object containing lists of widgets (by title) that has been changed, grouped by change type, e.g.:\n```ts\nwidgetChanges: {\n    removed: ['Applications'],\n    config?: ['Data points graph', 'Events list'],\n  },\n```",
+                    "properties": {
+                        "added": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "arrangement": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "config": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        },
+                        "removed": {
+                            "items": {
+                                "type": "string"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Widget": {
+            "additionalProperties": false,
+            "description": "A widget is a child on a dashboard which can be added and configured\nby the user. A widget can be defined by the [[DynamicComponentDefinition]]\nby any module of an application. Thew widget itself stores beside it's\nlink (componentId) to the DynamicComponentDefinition the information\nabout the title, layout (classes) and the configuration.",
+            "properties": {
+                "_height": {
+                    "description": "height dimension parameters",
+                    "type": "number"
+                },
+                "_width": {
+                    "description": "width dimension parameters",
+                    "type": "number"
+                },
+                "_x": {
+                    "description": "x dimension parameters",
+                    "type": "number"
+                },
+                "_y": {
+                    "description": "y dimension parameters",
+                    "type": "number"
+                },
+                "classes": {
+                    "description": "Which classes should be added."
+                },
+                "componentId": {
+                    "description": "The unique component id to find the component in the\nHOOK_COMPONENTS dynamic-component implementation.",
+                    "type": "string"
+                },
+                "config": {
+                    "description": "The current configuration of the widget."
+                },
+                "configComponent": {
+                    "description": "The config component name.",
+                    "type": "string"
+                },
+                "configTemplateUrl": {
+                    "description": "The config template URL for legacy plugins.",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "A random key for saving it to the object.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of the widget.",
+                    "type": "string"
+                },
+                "templateUrl": {
+                    "description": "The template URL for legacy plugins.",
+                    "type": "string"
+                },
+                "title": {
+                    "description": "The current title of the widget.",
+                    "type": "string"
+                },
+                "transformConfigWithContext": {
+                    "additionalProperties": false,
+                    "type": "object"
+                },
+                "widgetComponent": {
+                    "description": "The widget component name.",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "componentId",
+                "config",
+                "id"
+            ],
+            "type": "object"
+        }
+    },
+    "properties": {
+        "c8y_Dashboard": {
+            "$ref": "#/definitions/ContextDashboard"
+        },
+        "metadata": {
+            "additionalProperties": false,
+            "properties": {
+                "currentTenant": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "currentTenant"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "c8y_Dashboard",
+        "metadata"
+    ],
+    "type": "object"
+}
+
