@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {
   ActionBarModule,
+  AppStateService,
   C8yTranslatePipe,
   ContextData,
   ContextRouteService,
@@ -15,6 +16,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { DashboardJsonEditorComponent } from '../dashboard-json-editor/dashboard-json-editor.component';
 import { cloneDeep } from 'lodash-es';
 import { IManagedObject } from '@c8y/client';
+import { ContextDashboard } from '@c8y/ngx-components/context-dashboard/context-dashboard.model';
 
 @Component({
   selector: 'c8y-edit-dashboard-json-button',
@@ -43,6 +45,7 @@ export class EditDashboardJsonButtonComponent implements OnInit {
   private contextRouteService = inject(ContextRouteService);
   private modalService = inject(BsModalService);
   private contextDashboardService = inject(ContextDashboardService);
+  private appState = inject(AppStateService);
 
   async editDashboardJSON() {
     try {
@@ -51,21 +54,23 @@ export class EditDashboardJsonButtonComponent implements OnInit {
         initialState: {
           dashboardMO: this.dashboardMO,
           currentContext: this.contextData,
+          currentTenant: this.appState.currentTenant.value!.name,
         },
         ariaDescribedby: 'modal-body',
         ariaLabelledBy: 'modal-title',
         ignoreBackdropClick: true,
         keyboard: false,
       }).content as DashboardJsonEditorComponent;
-      const dashboardJSON = await modalRef.result;
+      const result = await modalRef.result;
+      const dashboard = result.c8y_Dashboard;
 
       if (this.dashboardMO) {
-        await this.updateDashboard(dashboardJSON);
+        await this.updateDashboard(dashboard);
       } else {
         // assuming that dashboard was pasted and saved, so new dashboard should be created
         this.contextDashboardService.copyClipboard = {
           dashboardId: '0', // TODO: how to get id of dashboardMO? currently we edit dashboard only (ContextDashboard)
-          dashboard: JSON.parse(dashboardJSON),
+          dashboard: dashboard,
           context: cloneDeep({
             context: this.contextData.context,
             // contextData: {}, TODO: how to get contextData of origin dashboard? it is needed to override e.g. datapooints target
@@ -120,12 +125,12 @@ export class EditDashboardJsonButtonComponent implements OnInit {
     return route;
   }
 
-  private async updateDashboard(updatedDashboard: string) {
+  private async updateDashboard(updatedDashboard: ContextDashboard) {
     try {
       const dashboardMO: ContextDashboardManagedObject = cloneDeep(
         this.dashboardMO
       );
-      dashboardMO.c8y_Dashboard = JSON.parse(updatedDashboard);
+      dashboardMO.c8y_Dashboard = updatedDashboard;
 
       await this.contextDashboardService.update(dashboardMO, this.contextData);
     } catch (_) {

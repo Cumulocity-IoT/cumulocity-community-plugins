@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  ViewChild,
   WritableSignal,
 } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -19,6 +20,7 @@ import {
 import { EditorComponent } from '@c8y/ngx-components/editor';
 import kpiSchema from '../kpi_config.json';
 import dashboardSchema from '../dashboard_config.json';
+import modalResult from '../modal_result.json';
 import Ajv from 'ajv';
 import { debounceTime } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
@@ -38,6 +40,13 @@ export const Schemas = {
   kpiWidget: 'kpiWidget',
 } as const;
 
+export type EditorModalResult = {
+  c8y_Dashboard: ContextDashboard;
+  metadata: {
+    currentTenant: string;
+  };
+};
+
 @Component({
   selector: 'c8y-dashboard-json-editor',
   template: `
@@ -53,6 +62,7 @@ export const Schemas = {
           class="flex-grow"
           [ngModel]="valueString"
           (ngModelChange)="dashboardJSONChange($event)"
+          (editorInit)="assignSchema()"
           monacoEditorMarkerValidator
         ></c8y-editor>
       </div>
@@ -64,34 +74,47 @@ export const Schemas = {
         <strong>Widget errors:</strong>
         <p *ngFor="let error of widgetErrors()">{{ error }}</p>
       </div>
+      <div *ngIf="contextErrors().length">
+        <strong>Context errors:</strong>
+        <p *ngFor="let error of contextErrors()">{{ error }}</p>
+      </div>
     </c8y-modal>
   `,
   standalone: true,
   imports: [ModalModule, CommonModule, EditorComponent, FormsModule],
 })
 export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
+  @ViewChild(EditorComponent) editorComponent!: EditorComponent;
   dashboardMO!: ContextDashboardManagedObject;
   currentContext!: ContextData;
+  currentTenant!: string;
   valueString = '';
   labels: ModalLabels = { ok: gettext('Save'), cancel: gettext('Cancel') };
 
   // TODO: ajv should be singleton (recommendation from docs), so separate service necessary
   ajv = new Ajv({ verbose: true, allErrors: true });
 
-  result: Promise<string> = new Promise((resolve) => {
+  result: Promise<EditorModalResult> = new Promise((resolve) => {
     this._close = resolve;
   });
 
   dashboardErrors: WritableSignal<string[]> = signal([]);
   widgetErrors: WritableSignal<string[]> = signal([]);
+  contextErrors: WritableSignal<string[]> = signal([]);
 
   private validate$ = new Subject<string>();
-  private _close: ((value: string) => void) | undefined;
+  private _close: ((value: EditorModalResult) => void) | undefined;
   private modalRef = inject(BsModalRef);
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.valueString = JSON.stringify(this.dashboardMO?.c8y_Dashboard) || '{}';
+    const value = {
+      c8y_Dashboard: this.dashboardMO?.c8y_Dashboard || {},
+      metadata: {
+        currentTenant: this.currentTenant,
+      },
+    };
+    this.valueString = JSON.stringify(value);
 
     this.ajv.addSchema(kpiSchema, Schemas.kpiWidget);
     this.ajv.addSchema(dashboardSchema, Schemas.dashboard);
@@ -99,6 +122,24 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
     this.validate$
       .pipe(debounceTime(500), takeUntil(this.destroy$))
       .subscribe(() => this.validate());
+  }
+
+  assignSchema() {
+    console.log(this.editorComponent.monaco);
+    this.editorComponent.monaco.languages.json.jsonDefaults.setDiagnosticsOptions(
+      {
+        validate: true,
+        schemas: [
+          {
+            uri: '../modal_result.json',
+            fileMatch: ['*'],
+            schema: modalResult,
+          },
+        ],
+        enableSchemaRequest: false,
+        allowComments: false,
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -112,7 +153,8 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   }
 
   async onSave() {
-    this._close!(this.valueString);
+    const result: EditorModalResult = JSON.parse(this.valueString);
+    this._close!(result);
     this.modalRef.hide();
   }
 
@@ -121,9 +163,13 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   }
 
   validate() {
-    const dashboard: ContextDashboard = JSON.parse(this.valueString);
+    const dashboard: ContextDashboard = JSON.parse(
+      this.valueString
+    ).c8y_Dashboard;
+    const tenant = JSON.parse(this.valueString).metadata.currentTenant;
     this.validateDashboard(dashboard);
     this.validateWidgets(dashboard);
+    this.validateContext(dashboard, tenant);
   }
 
   private validateDashboard(dashboard: ContextDashboard) {
@@ -147,6 +193,22 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
 
       validate?.(configWithoutNulls);
       this.widgetErrors.set(this.ajv.errorsText(validate?.errors).split(','));
+    }
+  }
+
+  private validateContext(dashboard: ContextDashboard, tenant: string) {
+    this.contextErrors.set([]);
+    if (tenant === this.currentTenant) {
+      return;
+    }
+
+    for (const [_, widget] of Object.entries(dashboard.children!)) {
+      widget.config.datapoints.forEach((dp: any) => {
+        this.contextErrors.set([
+          ...this.contextErrors(),
+          `${widget.title}: datapoint ${dp.label} needs device ${dp.__target.name} updated`,
+        ]);
+      });
     }
   }
 }
