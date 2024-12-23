@@ -93,7 +93,7 @@ describe('YAxisService', () => {
         axisLabel: {
           fontSize: 10,
           show: true,
-          formatter: (val) =>
+          formatter: (val: any) =>
             new Intl.NumberFormat('en-GB', {
               notation: 'compact',
               compactDisplay: 'short',

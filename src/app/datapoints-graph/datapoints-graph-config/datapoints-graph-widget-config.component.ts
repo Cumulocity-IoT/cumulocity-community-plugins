@@ -162,23 +162,23 @@ export class DatapointsGraphWidgetConfigComponent
   }
 
   dateSelectionChange(dateSelection: DATE_SELECTION): void {
+    this.dateSelection = dateSelection;
+
     if (dateSelection === DATE_SELECTION.CONFIG) {
+      this.formGroup.controls.displayDateSelection.enable();
       this.formGroup.patchValue({
-        displayDateSelection: false,
         widgetInstanceGlobalTimeContext: false,
       });
-    } else if (dateSelection === DATE_SELECTION.VIEW_AND_CONFIG) {
-      this.formGroup.patchValue({
-        displayDateSelection: true,
-        widgetInstanceGlobalTimeContext: false,
-      });
-    } else if (dateSelection === DATE_SELECTION.DASHBOARD_CONTEXT) {
-      this.formGroup.patchValue({
-        displayDateSelection: false,
-        widgetInstanceGlobalTimeContext: true,
-        realtime: false,
-      });
+      return;
     }
+
+    //displayDateSelection should be false and disabled when dateSelection is not CONFIG
+    this.formGroup.controls.displayDateSelection.disable();
+    this.formGroup.patchValue({
+      widgetInstanceGlobalTimeContext: true,
+      realtime: false,
+      displayDateSelection: false,
+    });
   }
 
   private assignContextFromContextDashboard(datapoint: KPIDetails) {
@@ -237,13 +237,13 @@ export class DatapointsGraphWidgetConfigComponent
   }
 
   private initDateSelection(): void {
-    if (this.config?.widgetInstanceGlobalTimeContext) {
-      this.dateSelection = DATE_SELECTION.DASHBOARD_CONTEXT;
-    } else if (this.config?.displayDateSelection) {
-      this.dateSelection = DATE_SELECTION.VIEW_AND_CONFIG;
-    } else {
+    if (!this.config?.widgetInstanceGlobalTimeContext) {
       this.dateSelection = DATE_SELECTION.CONFIG;
+      return;
     }
+
+    this.dateSelection = DATE_SELECTION.DASHBOARD_CONTEXT;
+    this.formGroup.controls.displayDateSelection.disable();
   }
 
   private setActiveDatapointsExists() {
