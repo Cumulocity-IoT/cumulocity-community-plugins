@@ -21,6 +21,7 @@ import { EditorComponent } from '@c8y/ngx-components/editor';
 import kpiSchema from './kpi.widget.json';
 import dashboardSchema from './dashboard_config.json';
 import modalResult from './modal_result.json';
+import alarmListSchema from './alarm-list.widget.json';
 import Ajv from 'ajv';
 import { debounceTime } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
@@ -138,6 +139,10 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
           {
             uri: 'kpi-widget-schema',
             schema: kpiSchema,
+          },
+          {
+            uri: 'alarm-list-widget-schema',
+            schema: alarmListSchema,
           },
         ],
         enableSchemaRequest: false,

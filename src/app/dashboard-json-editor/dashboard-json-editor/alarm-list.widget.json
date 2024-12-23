@@ -1,0 +1,105 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "AlarmOrderType": {
+            "enum": [
+                "BY_ACTIVE",
+                "BY_DATE_ASCENDING",
+                "BY_DATE_DESCENDING",
+                "BY_SEVERITY"
+            ],
+            "type": "string"
+        },
+        "AlarmStatusSettings": {
+            "additionalProperties": false,
+            "properties": {
+                "ACKNOWLEDGED": {
+                    "type": "boolean"
+                },
+                "ACTIVE": {
+                    "type": "boolean"
+                },
+                "CLEARED": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "ACKNOWLEDGED",
+                "ACTIVE",
+                "CLEARED"
+            ],
+            "type": "object"
+        },
+        "SeverityFilter": {
+            "additionalProperties": false,
+            "properties": {
+                "CRITICAL": {
+                    "type": "boolean"
+                },
+                "MAJOR": {
+                    "type": "boolean"
+                },
+                "MINOR": {
+                    "type": "boolean"
+                },
+                "WARNING": {
+                    "type": "boolean"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "device": {
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ],
+            "type": "object"
+        },
+        "isAutoRefreshEnabled": {
+            "type": "boolean"
+        },
+        "isRealtime": {
+            "type": "boolean"
+        },
+        "order": {
+            "$ref": "#/definitions/AlarmOrderType"
+        },
+        "refreshInterval": {
+            "type": "number"
+        },
+        "severities": {
+            "$ref": "#/definitions/SeverityFilter"
+        },
+        "showAlarmsForChildren": {
+            "type": "boolean"
+        },
+        "status": {
+            "$ref": "#/definitions/AlarmStatusSettings"
+        },
+        "types": {
+            "items": {
+                "type": "string"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "order",
+        "severities",
+        "status"
+    ],
+    "type": "object"
+}
+

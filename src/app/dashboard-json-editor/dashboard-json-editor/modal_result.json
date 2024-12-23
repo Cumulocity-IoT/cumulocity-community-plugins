@@ -226,24 +226,35 @@
       "required": ["componentId", "config", "id"],
       "allOf": [
         {
-          "if": {
-            "properties": {
-              "componentId": { "const": "kpi.widget" }
-            }
-          },
-          "then": {
-            "properties": {
-              "config": { "$ref": "kpi-widget-schema#" }
-            }
-          },
-          "else": {
-            "properties": {
-              "config": {
-                "type": "object",
-                "additionalProperties": true
+          "oneOf": [
+            {
+              "properties": {
+                "componentId": { "const": "kpi.widget" },
+                "config": { "$ref": "kpi-widget-schema#" }
+              }
+            },
+            {
+              "properties": {
+                "componentId": { "const": "Alarm list" },
+                "config": { "$ref": "alarm-list-widget-schema#" }
+              }
+            },
+            {
+              "not": {
+                "properties": {
+                  "componentId": {
+                    "enum": ["kpi.widget", "Alarm list"]
+                  }
+                }
+              },
+              "properties": {
+                "config": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
               }
             }
-          }
+          ]
         }
       ]
     }
