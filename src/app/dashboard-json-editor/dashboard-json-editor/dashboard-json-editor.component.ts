@@ -27,6 +27,8 @@ import { debounceTime } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { ContextDashboardManagedObject } from '@c8y/ngx-components/context-dashboard';
+import { defaultWidgetIds } from '@c8y/ngx-components/widgets/definitions';
+import { AnyValidateFunction } from 'ajv/dist/types';
 
 function replacer(_key: any, value: any) {
   // Filtering out properties
@@ -39,6 +41,7 @@ function replacer(_key: any, value: any) {
 export const Schemas = {
   dashboard: 'dashboard',
   kpiWidget: 'kpiWidget',
+  alarmListSchema: 'alarmListSchema',
 } as const;
 
 export type EditorModalResult = {
@@ -118,6 +121,7 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
     this.valueString = JSON.stringify(value);
 
     this.ajv.addSchema(kpiSchema, Schemas.kpiWidget);
+    this.ajv.addSchema(alarmListSchema, Schemas.alarmListSchema);
     this.ajv.addSchema(dashboardSchema, Schemas.dashboard);
 
     this.validate$
@@ -193,15 +197,26 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
   }
 
   private validateWidgets(dashboard: ContextDashboard) {
+    this.widgetErrors.set([]);
+
     for (const [_, value] of Object.entries(dashboard.children!)) {
       const config = value.config;
       // removing null values as typescript jsom schema doesn't provide info about optional properties
       const configWithoutNulls = JSON.parse(JSON.stringify(config, replacer));
 
-      const validate = this.ajv.getSchema(Schemas.kpiWidget);
+      let validate: AnyValidateFunction<unknown> | undefined;
+      if (value.componentId === defaultWidgetIds.KPI) {
+        validate = this.ajv.getSchema(Schemas.kpiWidget);
+      } else if (value.componentId === defaultWidgetIds.ALARM_LIST) {
+        validate = this.ajv.getSchema(Schemas.alarmListSchema);
+      }
 
       validate?.(configWithoutNulls);
-      this.widgetErrors.set(this.ajv.errorsText(validate?.errors).split(','));
+      const errors = this.ajv
+        .errorsText(validate?.errors)
+        .split(',')
+        .map((error) => `${value.title}: ${error}`);
+      this.widgetErrors.set([...this.widgetErrors(), ...errors]);
     }
   }
 
