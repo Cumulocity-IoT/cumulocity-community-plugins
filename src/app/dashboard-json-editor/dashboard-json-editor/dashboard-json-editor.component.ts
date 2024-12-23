@@ -18,7 +18,7 @@ import {
   ModalModule,
 } from '@c8y/ngx-components';
 import { EditorComponent } from '@c8y/ngx-components/editor';
-import kpiSchema from './kpi_config.json';
+import kpiSchema from './kpi.widget.json';
 import dashboardSchema from './dashboard_config.json';
 import modalResult from './modal_result.json';
 import Ajv from 'ajv';
@@ -134,6 +134,10 @@ export class DashboardJsonEditorComponent implements OnInit, OnDestroy {
             uri: './modal_result.json',
             fileMatch: ['*'],
             schema: modalResult,
+          },
+          {
+            uri: 'kpi-widget-schema',
+            schema: kpiSchema,
           },
         ],
         enableSchemaRequest: false,

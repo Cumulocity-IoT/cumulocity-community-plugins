@@ -188,7 +188,7 @@
           "type": "string"
         },
         "config": {
-          "description": "The current configuration of the widget."
+          "type": "object"
         },
         "configComponent": {
           "description": "The config component name.",
@@ -224,7 +224,28 @@
         }
       },
       "required": ["componentId", "config", "id"],
-      "type": "object"
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "componentId": { "const": "kpi.widget" }
+            }
+          },
+          "then": {
+            "properties": {
+              "config": { "$ref": "kpi-widget-schema#" }
+            }
+          },
+          "else": {
+            "properties": {
+              "config": {
+                "type": "object",
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "properties": {
