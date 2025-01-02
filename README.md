@@ -44,8 +44,8 @@ We follow the [Angular guidelines for commit messages](https://github.com/angula
 
 ---
 
-This tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
+This tools are provided as-is and without warranty or support. They do not constitute part of the product suite. Users are free to use, fork and modify them, subject to the license agreement. While we welcome contributions, we cannot guarantee to include every contribution in the master project.
 
 ---
 
-For more information you can Ask a Question in the forums at https://apamacommunity.com
+For more information you can Ask a Question in the [Forums](https://techcommunity.cumulocity.com/).
