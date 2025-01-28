@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: c8y-community-plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language: zh_TW\n"
+"Language-Team: Chinese Traditional\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: c8y-community-plugins\n"
+"X-Crowdin-Project-ID: 745533\n"
+"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-File: /main/locales.pot\n"
+"X-Crowdin-File-ID: 82\n"
+
+msgid "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Visibility:</b>\n"
+"      use visibility icon to toggle datapoint, alarm or event visibility on chart. At least one datapoint is required to display chart.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Alarm details</b>\n"
+"      Click alarm legend item to highlight area between alarm raised timestamp and alarm cleared timestamp.\n"
+"      You can also click alarm markline on chart to highlight alarm and to pause tooltip. Click on highlighted area or legend item to cancel highlighting.\n"
+"    </li>\n"
+"  </ul>"
+msgstr ""
+
+msgid "A graph display of a collection of data points"
+msgstr "以图形的形式显示一组数据点"
+
+msgid "AI API Key to use for generating simulator"
+msgstr ""
+
+msgid "Add advanced simulator"
+msgstr ""
+
+msgid "Aggregation"
+msgstr "聚合"
+
+msgid "Aggregation selection"
+msgstr ""
+
+msgid "Alarm of this type is currently active and outside of the selected time range"
+msgstr ""
+
+msgid "Apply"
+msgstr "應用"
+
+msgid "At least 1 active data points must be active."
+msgstr ""
+
+msgid "Choose how to select a date range, the available options are:\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Widget configuration:</b>\n"
+"      restricts the date selection only to the widget configuration\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Widget and widget configuration:</b>\n"
+"      restricts the date selection to the widget view and widget configuration only\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Dashboard time range:</b>\n"
+"      restricts date selection to the global dashboard configuration only\n"
+"    </li>\n"
+"  </ul>"
+msgstr ""
+
+msgid "Claude API Key"
+msgstr ""
+
+msgid "Click to enable zoom, then click and drag on the desired area in the chart."
+msgstr ""
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Critical`alarm`"
+msgstr "嚴重"
+
+msgid "Custom"
+msgstr "自定义"
+
+msgid "Daily"
+msgstr "每天"
+
+msgid "Daily aggregation"
+msgstr "每日聚合"
+
+msgid "Dashboard time range"
+msgstr "儀錶板時間範圍"
+
+msgid "Data points graph 2.0"
+msgstr ""
+
+msgid "Date selection"
+msgstr "日期選取"
+
+msgid "Details"
+msgstr "詳細資訊"
+
+msgid "Disable realtime"
+msgstr "禁用即時"
+
+msgid "Disable zoom in"
+msgstr ""
+
+msgid "Display icons"
+msgstr ""
+
+msgid "Display labels and units on y-axis"
+msgstr ""
+
+msgid "Display options"
+msgstr ""
+
+msgid "Display vertical line"
+msgstr ""
+
+msgid "Don't show again"
+msgstr "不再顯示"
+
+msgid "Enable realtime"
+msgstr "啟用即時"
+
+msgid "From`date`"
+msgstr "从"
+
+msgid "Help"
+msgstr "幫助"
+
+msgid "Hide data point"
+msgstr ""
+
+msgid "Hourly"
+msgstr "每小时"
+
+msgid "Hourly aggregation"
+msgstr "每小时聚合"
+
+msgid "Last day"
+msgstr "最后一天"
+
+msgid "Last hour"
+msgstr "最后一小时"
+
+msgid "Last minute"
+msgstr "最后一分钟"
+
+msgid "Last month"
+msgstr "上月"
+
+msgid "Last week"
+msgstr "上一周"
+
+msgid "Major`alarm`"
+msgstr "主要"
+
+msgid "Measurements received for this data point may be out of sync."
+msgstr ""
+
+msgid "Merge axis"
+msgstr ""
+
+msgid "Merge matching datapoints into single axis."
+msgstr ""
+
+msgid "Minor`alarm`"
+msgstr "次要"
+
+msgid "Minutely"
+msgstr "每分钟"
+
+msgid "Minutely aggregation"
+msgstr "每分钟聚合"
+
+msgid "Module Federation widget"
+msgstr ""
+
+msgid "No aggregation"
+msgstr "无聚合"
+
+msgid "No data points selected"
+msgstr ""
+
+msgid "None"
+msgstr "无"
+
+msgid "Number of instances"
+msgstr "实例数量"
+
+msgid "Number of instances to generate…"
+msgstr ""
+
+msgid "Optional details to describe the use case."
+msgstr ""
+
+msgid "Options"
+msgstr "选项"
+
+msgid "Provide use case to generate simulator for…"
+msgstr ""
+
+msgid "Realtime"
+msgstr "实时"
+
+msgid "Realtime active"
+msgstr "实时活动"
+
+msgid "Realtime inactive"
+msgstr "实时不活动"
+
+msgid "Save as image"
+msgstr ""
+
+msgid "Select data point to render chart"
+msgstr ""
+
+msgid "Show data point"
+msgstr ""
+
+msgid "Show icon when alarm occurs"
+msgstr ""
+
+msgid "Show labels and units"
+msgstr ""
+
+msgid "Show vertical line when alarm occurs"
+msgstr ""
+
+msgid "Some alarms or events have no matching data points. No icons will be shown for them."
+msgstr ""
+
+msgid "Store API key"
+msgstr ""
+
+msgid "Store key into browser local storage"
+msgstr ""
+
+msgid "To`date`"
+msgstr "到"
+
+msgid "Truncated data. Change aggregation or select shorter date range."
+msgstr ""
+
+msgid "Use case"
+msgstr ""
+
+msgid "Warning`alarm`"
+msgstr "警告"
+
+msgid "Widget and widget configuration"
+msgstr "小組件和小組件配置"
+
+msgid "Widget configuration"
+msgstr "小組件配置"
+
+msgid "X axis helper lines"
+msgstr ""
+
+msgid "Y axis helper lines"
+msgstr ""
+
+msgid "Zoom in"
+msgstr "放大"
+
+msgid "Zoom out"
+msgstr ""
+
