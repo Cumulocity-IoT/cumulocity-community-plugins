@@ -1,0 +1,296 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: c8y-community-plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language: fr\n"
+"Language-Team: French\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Crowdin-Project: c8y-community-plugins\n"
+"X-Crowdin-Project-ID: 745533\n"
+"X-Crowdin-Language: fr\n"
+"X-Crowdin-File: /main/locales.pot\n"
+"X-Crowdin-File-ID: 82\n"
+
+msgid "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Visibility:</b>\n"
+"      use visibility icon to toggle datapoint, alarm or event visibility on chart. At least one datapoint is required to display chart.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Alarm details</b>\n"
+"      Click alarm legend item to highlight area between alarm raised timestamp and alarm cleared timestamp.\n"
+"      You can also click alarm markline on chart to highlight alarm and to pause tooltip. Click on highlighted area or legend item to cancel highlighting.\n"
+"    </li>\n"
+"  </ul>"
+msgstr "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Visibilité :</b>\n"
+"      Utilisez l'icône de visibilité pour faire basculer la visibilité des points de données, des alarmes ou des événements sur le Diagramme. Au moins un point de données est requis pour afficher le Diagramme.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Détails de l'Alarme</b>:\n"
+"      Cliquez sur l'élément de la légende de l'alarme pour mettre en évidence la Zone entre l'heure de déclenchement de l'alarme et l'heure d'effacement de l'alarme.\n"
+"      Vous pouvez également cliquer sur la ligne de démarcation de l'alarme sur le Diagramme pour mettre en évidence l'alarme et mettre en pause l'info-bulle. Cliquez sur la zone en surbrillance ou sur l'élément de la légende pour annuler la mise en surbrillance.\n"
+"    </li>\n"
+"  </ul>"
+
+msgid "A graph display of a collection of data points"
+msgstr "Graphique affichant un ensemble de points de données"
+
+msgid "AI API Key to use for generating simulator"
+msgstr "Clé API AI à utiliser pour générer le simulateur"
+
+msgid "Add advanced simulator"
+msgstr "Ajouter un Simulateur Avancé"
+
+msgid "Aggregation"
+msgstr "Agrégation"
+
+msgid "Aggregation selection"
+msgstr "Sélection en cours d'agrégation"
+
+msgid "Alarm of this type is currently active and outside of the selected time range"
+msgstr "Une Alarme de ce type est actuellement active et en dehors de la période sélectionnée."
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "At least 1 active data points must be active."
+msgstr "Au moins 1 point de données doit être Actif."
+
+msgid "Choose how to select a date range, the available options are:\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Widget configuration:</b>\n"
+"      restricts the date selection only to the widget configuration\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Widget and widget configuration:</b>\n"
+"      restricts the date selection to the widget view and widget configuration only\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Dashboard time range:</b>\n"
+"      restricts date selection to the global dashboard configuration only\n"
+"    </li>\n"
+"  </ul>"
+msgstr "Sélectionnez la manière de sélectionner une plage de dates. Les options disponibles sont les suivantes :\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Configuration du widget :</b>\n"
+"      restreint la sélection de la date jusqu'à la configuration du widget\n"
+"    . </li>\n"
+"    <li>\n"
+"      <b>Configuration du wid</b> get <b>et du</b> tableau de <b>bord :</b>\n"
+"      restreint la sélection de la date uniquement à la configuration du widget et du tableau de bord\n"
+"    . </li>\n"
+"    <li>\n"
+"      <b>Intervalle des tableaux de bord :</b>\n"
+"      restreint la sélection des dates à la seule configuration globale du tableau de bord\n"
+"    . </li>\n"
+"  </ul>"
+
+msgid "Claude API Key"
+msgstr "Clé API de Claude"
+
+msgid "Click to enable zoom, then click and drag on the desired area in the chart."
+msgstr "Cliquez sur pour activer le zoom, puis cliquez et faites glisser sur la zone souhaitée dans le graphique."
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Critical`alarm`"
+msgstr "Critique"
+
+msgid "Custom"
+msgstr "Personnalisé"
+
+msgid "Daily"
+msgstr "Tous les jours"
+
+msgid "Daily aggregation"
+msgstr "Agrégation quotidienne"
+
+msgid "Dashboard time range"
+msgstr "Intervalle des tableaux de bord"
+
+msgid "Data points graph 2.0"
+msgstr "Points de données graphique 2.0"
+
+msgid "Date selection"
+msgstr "Sélection de la date"
+
+msgid "Details"
+msgstr "Détails"
+
+msgid "Disable realtime"
+msgstr "Désactiver temps réel"
+
+msgid "Disable zoom in"
+msgstr "Désactiver le zoom avant"
+
+msgid "Display icons"
+msgstr "Afficher comme des icônes"
+
+msgid "Display labels and units on y-axis"
+msgstr "Afficher comme les Étiquettes et les Unités sur l'Axe y"
+
+msgid "Display options"
+msgstr "Options d'Affichage"
+
+msgid "Display vertical line"
+msgstr "Afficher comme Ligne verticale"
+
+msgid "Don't show again"
+msgstr "Ne plus afficher"
+
+msgid "Enable realtime"
+msgstr "Activer temps réel"
+
+msgid "From`date`"
+msgstr "De"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Hide data point"
+msgstr "Point de données caché"
+
+msgid "Hourly"
+msgstr "Toutes les heures"
+
+msgid "Hourly aggregation"
+msgstr "Agrégation horaire"
+
+msgid "Last day"
+msgstr "Dernier jour"
+
+msgid "Last hour"
+msgstr "Dernière heure"
+
+msgid "Last minute"
+msgstr "Dernière minute"
+
+msgid "Last month"
+msgstr "Mois dernier"
+
+msgid "Last week"
+msgstr "La semaine dernière"
+
+msgid "Major`alarm`"
+msgstr "Majeure"
+
+msgid "Measurements received for this data point may be out of sync."
+msgstr "Les Mesures Reçu(e)s pour ce point de données peuvent être désynchronisées."
+
+msgid "Merge axis"
+msgstr "Fusionner les axes"
+
+msgid "Merge matching datapoints into single axis."
+msgstr "Fusionner les points de données correspondants en un axe Unique."
+
+msgid "Minor`alarm`"
+msgstr "Mineure"
+
+msgid "Minutely"
+msgstr "Par minute"
+
+msgid "Minutely aggregation"
+msgstr "Agrégation par minute"
+
+msgid "Module Federation widget"
+msgstr "Module Widget de la fédération"
+
+msgid "No aggregation"
+msgstr "Aucune agrégation"
+
+msgid "No data points selected"
+msgstr "Aucun point de données supprimé"
+
+msgid "None"
+msgstr "Aucun(e)"
+
+msgid "Number of instances"
+msgstr "Nombre d'instances"
+
+msgid "Number of instances to generate…"
+msgstr "Nombre d'instances pour générer…"
+
+msgid "Optional details to describe the use case."
+msgstr "Détails optionnels pour décrire le cas d'utilisation."
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Provide use case to generate simulator for…"
+msgstr "Fournir un cas d'utilisation pour générer un Simulateur pour…"
+
+msgid "Realtime"
+msgstr "Temps réel"
+
+msgid "Realtime active"
+msgstr "Actif en temps réel"
+
+msgid "Realtime inactive"
+msgstr "Inactif en temps réel"
+
+msgid "Save as image"
+msgstr "Enregistrer en cours Image"
+
+msgid "Select data point to render chart"
+msgstr "Sélectionner le point de données pour le Diagramme."
+
+msgid "Show data point"
+msgstr "Afficher le point de données"
+
+msgid "Show icon when alarm occurs"
+msgstr "Afficher l'icône quand l'alarme est déclenchée"
+
+msgid "Show labels and units"
+msgstr "Afficher les Étiquettes et les Unités"
+
+msgid "Show vertical line when alarm occurs"
+msgstr "Afficher la ligne verticale quand l'alarme est déclenchée"
+
+msgid "Some alarms or events have no matching data points. No icons will be shown for them."
+msgstr "Certains Alarmes ou Événements n'ont pas de points de données correspondants. Aucune icône ne sera affichée pour eux."
+
+msgid "Store API key"
+msgstr "Clé API du magasin"
+
+msgid "Store key into browser local storage"
+msgstr "Stocker la clé dans la mémoire locale du navigateur"
+
+msgid "To`date`"
+msgstr "À"
+
+msgid "Truncated data. Change aggregation or select shorter date range."
+msgstr "Données tronquées. Modifiez l'agrégation ou sélectionnez une plage de dates plus courte."
+
+msgid "Use case"
+msgstr "Cas d'utilisation"
+
+msgid "Warning`alarm`"
+msgstr "Avertissement"
+
+msgid "Widget and widget configuration"
+msgstr "Widget et configuration du widget"
+
+msgid "Widget configuration"
+msgstr "Configuration du widget"
+
+msgid "X axis helper lines"
+msgstr "Lignes d'aide pour l'axe X"
+
+msgid "Y axis helper lines"
+msgstr "Lignes d'aide pour l'axe y"
+
+msgid "Zoom in"
+msgstr "Zoom avant"
+
+msgid "Zoom out"
+msgstr "Zoom avant"
+

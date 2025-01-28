@@ -1,0 +1,296 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: c8y-community-plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language: nl\n"
+"Language-Team: Dutch\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: c8y-community-plugins\n"
+"X-Crowdin-Project-ID: 745533\n"
+"X-Crowdin-Language: nl\n"
+"X-Crowdin-File: /main/locales.pot\n"
+"X-Crowdin-File-ID: 82\n"
+
+msgid "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Visibility:</b>\n"
+"      use visibility icon to toggle datapoint, alarm or event visibility on chart. At least one datapoint is required to display chart.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Alarm details</b>\n"
+"      Click alarm legend item to highlight area between alarm raised timestamp and alarm cleared timestamp.\n"
+"      You can also click alarm markline on chart to highlight alarm and to pause tooltip. Click on highlighted area or legend item to cancel highlighting.\n"
+"    </li>\n"
+"  </ul>"
+msgstr "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Zichtbaarheid:</b>\n"
+"      gebruik het pictogram voor zichtbaarheid om de zichtbaarheid van datapunten, alarmen/gebeurtenissen op het diagram te <b>In-/uitschakelen</b>. Er is minstens één datapunt vereist om het diagram weer te geven.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Alarm details</b>\n"
+"      Klik op de alarmlegende om het gebied tussen de tijdstempel van het opgeheven alarm en de tijdstempel van het gewiste alarm te markeren.\n"
+"      U kunt ook op de alarmmarkering op het diagram klikken om het alarm te markeren en de tooltip te PAUZEREN. Klik op het gemarkeerde gebied of legenda-item om de markering te annuleren.\n"
+"    </li>\n"
+"  </ul>"
+
+msgid "A graph display of a collection of data points"
+msgstr "Een diagramweergave van een verzameling gegevenspunten"
+
+msgid "AI API Key to use for generating simulator"
+msgstr "AI API-sleutel om te gebruiken voor het genereren van simulator"
+
+msgid "Add advanced simulator"
+msgstr "Geavanceerde simulator toevoegen"
+
+msgid "Aggregation"
+msgstr "Aggregatie"
+
+msgid "Aggregation selection"
+msgstr "Aggregatie selectie..."
+
+msgid "Alarm of this type is currently active and outside of the selected time range"
+msgstr "Alarm van dit type is momenteel actief en buiten het geselecteerde tijdsbereik."
+
+msgid "Apply"
+msgstr "Toepassen"
+
+msgid "At least 1 active data points must be active."
+msgstr "Ten minste 1 Gegevenspunten moet actief zijn."
+
+msgid "Choose how to select a date range, the available options are:\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Widget configuration:</b>\n"
+"      restricts the date selection only to the widget configuration\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Widget and widget configuration:</b>\n"
+"      restricts the date selection to the widget view and widget configuration only\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Dashboard time range:</b>\n"
+"      restricts date selection to the global dashboard configuration only\n"
+"    </li>\n"
+"  </ul>"
+msgstr "Kies hoe u een datumbereik selecteert, de beschikbare opties zijn:\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Widgetconfiguratie:</b>\n"
+"      beperkt de datumselectie tot de widgetconfiguratie\n"
+"    . </li>\n"
+"    <li>\n"
+"      <b>Widget- en widgetconfiguratie:</b>\n"
+"      beperkt de datumselectie alleen tot de widgetweergave en widgetconfiguratie\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Dashboardtijdbereik:</b>\n"
+"      beperkt de datumselectie tot de globale dashboardconfiguratie\n"
+"    . </li>\n"
+"  </ul>"
+
+msgid "Claude API Key"
+msgstr "Claude API-sleutel"
+
+msgid "Click to enable zoom, then click and drag on the desired area in the chart."
+msgstr "Klik om in te zoomen en klik en sleep dan op het gewenste gebied in de grafiek."
+
+msgid "Close"
+msgstr "Sluiten"
+
+msgid "Critical`alarm`"
+msgstr "Kritiek"
+
+msgid "Custom"
+msgstr "Aangepast"
+
+msgid "Daily"
+msgstr "Dagelijks"
+
+msgid "Daily aggregation"
+msgstr "Aggregatie per dag"
+
+msgid "Dashboard time range"
+msgstr "Dashboardtijdbereik"
+
+msgid "Data points graph 2.0"
+msgstr "Gegevenspunten grafiek 2.0"
+
+msgid "Date selection"
+msgstr "Datumselectie"
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Disable realtime"
+msgstr "Realtime uitschakelen"
+
+msgid "Disable zoom in"
+msgstr "Inzoomen uitschakelen"
+
+msgid "Display icons"
+msgstr "Pictogrammen weergeven"
+
+msgid "Display labels and units on y-axis"
+msgstr "Labels en eenheden op Y-as weergeven"
+
+msgid "Display options"
+msgstr "Opties weergeven"
+
+msgid "Display vertical line"
+msgstr "Verticale lijn weergeven"
+
+msgid "Don't show again"
+msgstr "Niet meer weergeven"
+
+msgid "Enable realtime"
+msgstr "Realtime inschakelen"
+
+msgid "From`date`"
+msgstr "Vanaf"
+
+msgid "Help"
+msgstr "Help"
+
+msgid "Hide data point"
+msgstr "Gegevenspunt verbergen"
+
+msgid "Hourly"
+msgstr "Per uur"
+
+msgid "Hourly aggregation"
+msgstr "Aggregatie per uur"
+
+msgid "Last day"
+msgstr "Vorige dag"
+
+msgid "Last hour"
+msgstr "Afgelopen uur"
+
+msgid "Last minute"
+msgstr "Laatste minuut"
+
+msgid "Last month"
+msgstr "Vorige maand"
+
+msgid "Last week"
+msgstr "Laatste week"
+
+msgid "Major`alarm`"
+msgstr "Belangrijk"
+
+msgid "Measurements received for this data point may be out of sync."
+msgstr "Metingen ontvangen voor dit Gegevenspunt kunnen niet synchroon zijn."
+
+msgid "Merge axis"
+msgstr "As Samenvoegen"
+
+msgid "Merge matching datapoints into single axis."
+msgstr "Overeenkomende datapunten samenvoegen tot een enkele as."
+
+msgid "Minor`alarm`"
+msgstr "Minder belangrijk"
+
+msgid "Minutely"
+msgstr "Per minuut"
+
+msgid "Minutely aggregation"
+msgstr "Aggregatie per minuut"
+
+msgid "Module Federation widget"
+msgstr "Module Federatie widget"
+
+msgid "No aggregation"
+msgstr "Geen aggregatie"
+
+msgid "No data points selected"
+msgstr "Geen gegevenspunten geselecteerd"
+
+msgid "None"
+msgstr "Geen"
+
+msgid "Number of instances"
+msgstr "Aantal instanties"
+
+msgid "Number of instances to generate…"
+msgstr "Aantal instanties om…te genereren"
+
+msgid "Optional details to describe the use case."
+msgstr "Optionele details om de use case te beschrijven."
+
+msgid "Options"
+msgstr "Opties"
+
+msgid "Provide use case to generate simulator for…"
+msgstr "Use Case gebruiken om simulator te genereren voor…"
+
+msgid "Realtime"
+msgstr "Realtime"
+
+msgid "Realtime active"
+msgstr "Realtime actief"
+
+msgid "Realtime inactive"
+msgstr "Realtime inactief"
+
+msgid "Save as image"
+msgstr "Opslaan als afbeelding"
+
+msgid "Select data point to render chart"
+msgstr "Geselecteerde Gegevenspunten selecteren om grafiek weer te geven."
+
+msgid "Show data point"
+msgstr "Gegevenspunt weergeven"
+
+msgid "Show icon when alarm occurs"
+msgstr "Pictogram weergeven bij opgetreden Alarm"
+
+msgid "Show labels and units"
+msgstr "Labels en eenheden weergeven"
+
+msgid "Show vertical line when alarm occurs"
+msgstr "Verticale lijn weergeven wanneer alarm optreedt"
+
+msgid "Some alarms or events have no matching data points. No icons will be shown for them."
+msgstr "Sommige Alarmen/gebeurtenissen hebben geen overeenkomende Gegevenspunten. Hiervoor worden geen pictogrammen weergegeven."
+
+msgid "Store API key"
+msgstr "API-sleutel opslaan"
+
+msgid "Store key into browser local storage"
+msgstr "Sleutel opslaan in lokale opslag van browser"
+
+msgid "To`date`"
+msgstr "Tot"
+
+msgid "Truncated data. Change aggregation or select shorter date range."
+msgstr "Afgekapte gegevens. Aggregatie wijzigen of korter datumbereik selecteren."
+
+msgid "Use case"
+msgstr "Gebruiken"
+
+msgid "Warning`alarm`"
+msgstr "Waarschuwing"
+
+msgid "Widget and widget configuration"
+msgstr "Widget en widgetconfiguratie"
+
+msgid "Widget configuration"
+msgstr "Widgetconfiguratie"
+
+msgid "X axis helper lines"
+msgstr "Hulplijnen X-as"
+
+msgid "Y axis helper lines"
+msgstr "Hulplijnen voor de Y-as"
+
+msgid "Zoom in"
+msgstr "Inzoomen"
+
+msgid "Zoom out"
+msgstr "Inzoomen"
+
