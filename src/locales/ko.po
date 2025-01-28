@@ -1,0 +1,272 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: c8y-community-plugins\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"Last-Translator: \n"
+"Language: ko\n"
+"Language-Team: Korean\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Crowdin-Project: c8y-community-plugins\n"
+"X-Crowdin-Project-ID: 745533\n"
+"X-Crowdin-Language: ko\n"
+"X-Crowdin-File: /main/locales.pot\n"
+"X-Crowdin-File-ID: 82\n"
+
+msgid "<ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Visibility:</b>\n"
+"      use visibility icon to toggle datapoint, alarm or event visibility on chart. At least one datapoint is required to display chart.\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Alarm details</b>\n"
+"      Click alarm legend item to highlight area between alarm raised timestamp and alarm cleared timestamp.\n"
+"      You can also click alarm markline on chart to highlight alarm and to pause tooltip. Click on highlighted area or legend item to cancel highlighting.\n"
+"    </li>\n"
+"  </ul>"
+msgstr ""
+
+msgid "A graph display of a collection of data points"
+msgstr "데이터 포인트 컬렉션을 보여주는 그래프"
+
+msgid "AI API Key to use for generating simulator"
+msgstr ""
+
+msgid "Add advanced simulator"
+msgstr ""
+
+msgid "Aggregation"
+msgstr "집계"
+
+msgid "Aggregation selection"
+msgstr ""
+
+msgid "Alarm of this type is currently active and outside of the selected time range"
+msgstr ""
+
+msgid "Apply"
+msgstr "적용"
+
+msgid "At least 1 active data points must be active."
+msgstr ""
+
+msgid "Choose how to select a date range, the available options are:\n"
+"  <ul class=\"m-l-0 p-l-8 m-t-8 m-b-0\">\n"
+"    <li>\n"
+"      <b>Widget configuration:</b>\n"
+"      restricts the date selection only to the widget configuration\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Widget and widget configuration:</b>\n"
+"      restricts the date selection to the widget view and widget configuration only\n"
+"    </li>\n"
+"    <li>\n"
+"      <b>Dashboard time range:</b>\n"
+"      restricts date selection to the global dashboard configuration only\n"
+"    </li>\n"
+"  </ul>"
+msgstr ""
+
+msgid "Claude API Key"
+msgstr ""
+
+msgid "Click to enable zoom, then click and drag on the desired area in the chart."
+msgstr ""
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Critical`alarm`"
+msgstr "중요"
+
+msgid "Custom"
+msgstr "사용자 지정"
+
+msgid "Daily"
+msgstr "매일"
+
+msgid "Daily aggregation"
+msgstr "데이터 집계"
+
+msgid "Dashboard time range"
+msgstr "대시보드 시간 범위"
+
+msgid "Data points graph 2.0"
+msgstr ""
+
+msgid "Date selection"
+msgstr "날짜 선택"
+
+msgid "Details"
+msgstr "상세 정보"
+
+msgid "Disable realtime"
+msgstr "실시간 비활성화"
+
+msgid "Disable zoom in"
+msgstr ""
+
+msgid "Display icons"
+msgstr ""
+
+msgid "Display labels and units on y-axis"
+msgstr ""
+
+msgid "Display options"
+msgstr ""
+
+msgid "Display vertical line"
+msgstr ""
+
+msgid "Don't show again"
+msgstr "다시 표시하지 않기"
+
+msgid "Enable realtime"
+msgstr "실시간 활성화"
+
+msgid "From`date`"
+msgstr "시작"
+
+msgid "Help"
+msgstr "도움말"
+
+msgid "Hide data point"
+msgstr ""
+
+msgid "Hourly"
+msgstr "시간단위"
+
+msgid "Hourly aggregation"
+msgstr "시간당 집계"
+
+msgid "Last day"
+msgstr "어제"
+
+msgid "Last hour"
+msgstr "1시간 전"
+
+msgid "Last minute"
+msgstr "1분 전"
+
+msgid "Last month"
+msgstr "지난 달"
+
+msgid "Last week"
+msgstr "지난주"
+
+msgid "Major`alarm`"
+msgstr "주요"
+
+msgid "Measurements received for this data point may be out of sync."
+msgstr ""
+
+msgid "Merge axis"
+msgstr ""
+
+msgid "Merge matching datapoints into single axis."
+msgstr ""
+
+msgid "Minor`alarm`"
+msgstr "일반"
+
+msgid "Minutely"
+msgstr "분 단위"
+
+msgid "Minutely aggregation"
+msgstr "분 단위 집계"
+
+msgid "Module Federation widget"
+msgstr ""
+
+msgid "No aggregation"
+msgstr "집계 없음"
+
+msgid "No data points selected"
+msgstr "데이터 포인트를 선택하지 않았습니다"
+
+msgid "None"
+msgstr "없음"
+
+msgid "Number of instances"
+msgstr "인스턴스 수"
+
+msgid "Number of instances to generate…"
+msgstr ""
+
+msgid "Optional details to describe the use case."
+msgstr ""
+
+msgid "Options"
+msgstr "옵션"
+
+msgid "Provide use case to generate simulator for…"
+msgstr ""
+
+msgid "Realtime"
+msgstr "실시간"
+
+msgid "Realtime active"
+msgstr "실시간 활성"
+
+msgid "Realtime inactive"
+msgstr "실시간 비활성"
+
+msgid "Save as image"
+msgstr ""
+
+msgid "Select data point to render chart"
+msgstr ""
+
+msgid "Show data point"
+msgstr ""
+
+msgid "Show icon when alarm occurs"
+msgstr ""
+
+msgid "Show labels and units"
+msgstr ""
+
+msgid "Show vertical line when alarm occurs"
+msgstr ""
+
+msgid "Some alarms or events have no matching data points. No icons will be shown for them."
+msgstr ""
+
+msgid "Store API key"
+msgstr ""
+
+msgid "Store key into browser local storage"
+msgstr ""
+
+msgid "To`date`"
+msgstr "종료"
+
+msgid "Truncated data. Change aggregation or select shorter date range."
+msgstr ""
+
+msgid "Use case"
+msgstr ""
+
+msgid "Warning`alarm`"
+msgstr "경고"
+
+msgid "Widget and widget configuration"
+msgstr "위젯 및 위젯 구성"
+
+msgid "Widget configuration"
+msgstr "위젯 구성"
+
+msgid "X axis helper lines"
+msgstr ""
+
+msgid "Y axis helper lines"
+msgstr ""
+
+msgid "Zoom in"
+msgstr "확대"
+
+msgid "Zoom out"
+msgstr ""
+
