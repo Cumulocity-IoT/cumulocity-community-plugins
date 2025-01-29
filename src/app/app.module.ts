@@ -6,7 +6,7 @@ import {
   CoreModule,
   RouterModule,
 } from '@c8y/ngx-components';
-import { CockpitDashboardModule } from '@c8y/ngx-components/context-dashboard';
+import { CockpitDashboardModule } from '@c8y/ngx-components/context-dashboard/cockpit-home-dashboard';
 
 @NgModule({
   imports: [

@@ -45,6 +45,7 @@ async function loadConfigComponent() {
             datapoints: DynamicDatapointsResolver,
           },
           data: {
+            schema: () => import('./datapoints-graph.c8y-schema-loader'),
             settings: {
               noNewWidgets: false,
               widgetDefaults: {
