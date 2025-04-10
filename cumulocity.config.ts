@@ -31,12 +31,6 @@ export default {
         description: 'Adds a custom widget to the shell application',
       },
       {
-        name: 'Data points graph',
-        module: 'DatapointsGraphWidgetModule',
-        path: './src/app/datapoints-graph/datapoints-graph-widget.module.ts',
-        description: 'Adds data points graph widget to the shell application',
-      },
-      {
         name: 'Advanced simulator',
         module: 'AdvancedSimulatorModule',
         path: './src/app/advanced-simulator/advanced-simulator.module.ts',
