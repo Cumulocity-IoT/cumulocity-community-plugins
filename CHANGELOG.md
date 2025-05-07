@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.6.0...v3.7.0) (2025-05-07)
+
+
+### Features
+
+* **core:** add standalone: false for Angular 19 compatibility  ([#71](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/71)) ([e20be13](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/e20be132252778cfb8662456e991e63a71d54d48))
+
 # [3.6.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.5.0...v3.6.0) (2024-11-08)
 
 
