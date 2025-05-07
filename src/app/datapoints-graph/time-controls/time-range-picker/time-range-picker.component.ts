@@ -12,6 +12,7 @@ import { DateTimeContext, gettext } from '@c8y/ngx-components';
 @Component({
   selector: 'c8y-time-range-picker',
   templateUrl: './time-range-picker.component.html',
+  standalone: false,
 })
 export class TimeRangePickerComponent implements OnChanges {
   @Input() timeRange: DateTimeContext;

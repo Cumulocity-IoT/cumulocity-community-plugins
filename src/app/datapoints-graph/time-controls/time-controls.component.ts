@@ -21,6 +21,7 @@ import { aggregationType } from '@c8y/client';
 @Component({
   selector: 'c8y-time-controls',
   templateUrl: './time-controls.component.html',
+  standalone: false,
 })
 export class TimeControlsComponent implements OnInit, OnChanges {
   timeRange: DateTimeContext | undefined;

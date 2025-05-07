@@ -41,6 +41,7 @@ import { ContextDashboardComponent } from '@c8y/ngx-components/context-dashboard
   templateUrl: './datapoints-graph-widget-view.component.html',
   styleUrls: ['./datapoints-graph-widget-view.less'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class DatapointsGraphWidgetViewComponent
   implements OnChanges, OnDestroy

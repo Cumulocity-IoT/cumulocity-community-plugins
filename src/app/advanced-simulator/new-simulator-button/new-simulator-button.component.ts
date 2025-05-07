@@ -17,6 +17,7 @@ import { SimulatorModalComponent } from '../simulator-modal/simulator-modal.comp
       </button>
     </c8y-action-bar-item>
   `,
+  standalone: false,
 })
 export class NewSimulatorButtonComponent {
   modalService = inject(BsModalService);
