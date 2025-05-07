@@ -22,6 +22,7 @@ import {
     </div>
   `,
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  standalone: false,
 })
 export class ExampleWidgetPluginConfigComponent
   implements DynamicComponent, OnBeforeSave

@@ -50,6 +50,7 @@ import {
   styleUrls: ['./datapoints-graph-widget-config.less'],
   encapsulation: ViewEncapsulation.None,
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  standalone: false,
 })
 export class DatapointsGraphWidgetConfigComponent
   implements OnInit, OnBeforeSave, OnDestroy

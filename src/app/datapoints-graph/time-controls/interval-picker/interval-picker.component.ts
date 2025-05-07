@@ -4,6 +4,7 @@ import { Interval, INTERVALS } from '../../model';
 @Component({
   selector: 'c8y-interval-picker',
   templateUrl: './interval-picker.component.html',
+  standalone: false,
 })
 export class IntervalPickerComponent implements OnInit {
   INTERVALS = INTERVALS;

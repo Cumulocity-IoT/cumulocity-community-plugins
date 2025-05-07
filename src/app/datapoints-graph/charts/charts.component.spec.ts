@@ -54,6 +54,7 @@ const dp: DatapointsGraphKPIDetails = {
       }
     `,
   ],
+  standalone: false,
 })
 export class ChartsWrapperComponent {
   config: DatapointsGraphWidgetConfig = {

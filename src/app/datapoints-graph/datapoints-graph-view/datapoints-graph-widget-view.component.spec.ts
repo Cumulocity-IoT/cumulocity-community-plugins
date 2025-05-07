@@ -32,6 +32,7 @@ import {
 @Component({
   selector: 'c8y-alarms-filter',
   template: ``,
+  standalone: false,
 })
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export class AlarmsFilterComponentMock {
