@@ -35,12 +35,14 @@ export default {
         module: 'DatapointsGraphWidgetModule',
         path: './src/app/datapoints-graph/datapoints-graph-widget.module.ts',
         description: 'Adds data points graph widget to the shell application',
+        readmePath: './src/app/datapoints-graph/README.md',
       },
       {
         name: 'Advanced simulator',
         module: 'AdvancedSimulatorModule',
         path: './src/app/advanced-simulator/advanced-simulator.module.ts',
         description: 'Allows to generate simulators with the help of Ai.',
+        readmePath: './src/app/advanced-simulator/README.md',
       },
       {
         name: 'Application builder dashboard migration',
@@ -48,6 +50,7 @@ export default {
         path: './src/app/app-builder-dashboard-migration/app-builder-dashboard-migration.module.ts',
         description:
           'Allows to migrate dashboards generated via application builder to be migrated into cockpit reports.',
+        readmePath: './src/app/app-builder-dashboard-migration/README.md',
       },
     ],
     versioningMatrix,
@@ -70,22 +73,10 @@ export default {
       '@ngx-translate/core',
     ],
     copy: [
-      {
-        from: 'CHANGELOG.md',
-        to: 'CHANGELOG.md',
-      },
-      {
-        from: 'screenshots',
-        to: 'screenshots',
-      },
-      {
-        from: 'c8y-widget-preview-img',
-        to: 'c8y-widget-preview-img',
-      },
-      {
-        from: 'LICENSE',
-        to: 'LICENSE.txt',
-      },
+      { from: 'CHANGELOG.md', to: 'CHANGELOG.md' },
+      { from: 'screenshots', to: 'screenshots' },
+      { from: 'c8y-widget-preview-img', to: 'c8y-widget-preview-img' },
+      { from: 'LICENSE', to: 'LICENSE.txt' },
     ],
   },
 } as const satisfies EnvironmentOptions;
