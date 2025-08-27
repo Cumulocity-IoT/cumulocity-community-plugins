@@ -6,7 +6,7 @@ import {
   CoreModule,
   RouterModule,
 } from '@c8y/ngx-components';
-import { CockpitDashboardModule } from '@c8y/ngx-components/context-dashboard';
+import { ContextDashboardModule } from '@c8y/ngx-components/context-dashboard';
 
 @NgModule({
   imports: [
@@ -14,8 +14,8 @@ import { CockpitDashboardModule } from '@c8y/ngx-components/context-dashboard';
     ngRouterModule.forRoot([], { enableTracing: false, useHash: true }),
     RouterModule.forRoot(),
     CoreModule.forRoot(),
-    CockpitDashboardModule,
+    ContextDashboardModule,
+    BootstrapComponent,
   ],
-  bootstrap: [BootstrapComponent],
 })
 export class AppModule {}
