@@ -1,44 +1,45 @@
+import { AnimationBuilder } from '@angular/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import {
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { DatapointsGraphWidgetConfigComponent } from './datapoints-graph-widget-config.component';
+import { NgForm, ReactiveFormsModule } from '@angular/forms';
+import { aggregationType } from '@c8y/client';
 import {
   CommonModule,
   CoreModule,
   DynamicComponentAlertAggregator,
   FormsModule,
 } from '@c8y/ngx-components';
-import { TimeControlsModule } from '../time-controls';
+import {
+  AlarmDetails,
+  AlarmEventSelectionListComponent,
+  EventDetails,
+} from '@c8y/ngx-components/alarm-event-selector';
+import {
+  ContextDashboardComponent,
+  WidgetConfigComponent,
+} from '@c8y/ngx-components/context-dashboard';
+import { DatapointSelectorModule } from '@c8y/ngx-components/datapoint-selector';
+import { expect } from '@jest/globals';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { take } from 'rxjs/operators';
 import {
   ChartAlarmsService,
   ChartEventsService,
   ChartsComponent,
 } from '../charts';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { NgForm, ReactiveFormsModule } from '@angular/forms';
 import {
   DatapointsGraphKPIDetails,
   DatapointsGraphWidgetConfig,
   DATE_SELECTION,
 } from '../model';
-import { PopoverModule } from 'ngx-bootstrap/popover';
-import { DatapointSelectorModule } from '@c8y/ngx-components/datapoint-selector';
-import { aggregationType } from '@c8y/client';
-import { AnimationBuilder } from '@angular/animations';
-import { take } from 'rxjs/operators';
-import {
-  ContextDashboardComponent,
-  WidgetConfigComponent,
-} from '@c8y/ngx-components/context-dashboard';
-import {
-  AlarmEventSelectionListComponent,
-  AlarmDetails,
-  EventDetails,
-} from '@c8y/ngx-components/alarm-event-selector';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TimeControlsModule } from '../time-controls';
+import { DatapointsGraphWidgetConfigComponent } from './datapoints-graph-widget-config.component';
 
 describe('DatapointsGraphWidgetConfigComponent', () => {
   let component: DatapointsGraphWidgetConfigComponent;
@@ -85,11 +86,9 @@ describe('DatapointsGraphWidgetConfigComponent', () => {
         DatapointSelectorModule,
         CoreModule,
         DragDropModule,
-      ],
-      declarations: [
-        DatapointsGraphWidgetConfigComponent,
         AlarmEventSelectionListComponent,
       ],
+      declarations: [DatapointsGraphWidgetConfigComponent],
       providers: [
         { provide: window, useValue: { ResizeObserver: {} } },
         NgForm,

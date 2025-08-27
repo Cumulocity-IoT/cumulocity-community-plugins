@@ -1,16 +1,23 @@
+import { Component, Input, SimpleChanges } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { DatapointsGraphWidgetViewComponent } from './datapoints-graph-widget-view.component';
+import { FetchClient, Realtime } from '@c8y/client';
 import {
   CommonModule,
   DateTimeContext,
   DynamicComponentAlertAggregator,
 } from '@c8y/ngx-components';
-import { TimeControlsModule } from '../time-controls';
+import {
+  AlarmSeverityToIconPipe,
+  AlarmSeverityToLabelPipe,
+} from '@c8y/ngx-components/alarms';
+import { expect } from '@jest/globals';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import {
   ChartAlarmsService,
   ChartEventsService,
@@ -20,14 +27,8 @@ import {
   DatapointsGraphKPIDetails,
   DatapointsGraphWidgetConfig,
 } from '../model';
-import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { FetchClient, Realtime } from '@c8y/client';
-import { PopoverModule } from 'ngx-bootstrap/popover';
-import {
-  AlarmSeverityToIconPipe,
-  AlarmSeverityToLabelPipe,
-} from '@c8y/ngx-components/alarms';
+import { TimeControlsModule } from '../time-controls';
+import { DatapointsGraphWidgetViewComponent } from './datapoints-graph-widget-view.component';
 
 @Component({
   selector: 'c8y-alarms-filter',
@@ -63,6 +64,7 @@ describe('DatapointsGraphWidgetViewComponent', () => {
   beforeEach(async () => {
     client = {
       fetch: jest.fn().mockName('fetch').mockImplementation(),
+      setAuth: jest.fn().mockName('setAuth').mockImplementation(),
     } as any as FetchClient;
     await TestBed.configureTestingModule({
       imports: [
