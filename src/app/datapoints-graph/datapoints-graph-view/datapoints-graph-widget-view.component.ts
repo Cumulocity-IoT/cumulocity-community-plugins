@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
+  OnInit,
 } from '@angular/core';
 import {
   AGGREGATION_ICONS,
@@ -44,7 +45,7 @@ import { ContextDashboardComponent } from '@c8y/ngx-components/context-dashboard
   standalone: false,
 })
 export class DatapointsGraphWidgetViewComponent
-  implements OnChanges, OnDestroy
+  implements OnChanges, OnDestroy, OnInit
 {
   events: EventDetailsExtended[] = [];
   alarms: AlarmDetailsExtended[] = [];
