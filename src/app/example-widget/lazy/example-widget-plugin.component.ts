@@ -17,6 +17,7 @@ import { Component, Input } from '@angular/core';
       }
     `,
   ],
+  standalone: false,
 })
 export class ExampleWidgetPluginViewComponent {
   @Input() config;

@@ -11,6 +11,7 @@ const AI_MODEL = 'claude-3-5-sonnet-20240620';
 @Component({
   selector: 'c8y-simulator-modal',
   templateUrl: './simulator-modal.component.html',
+  standalone: false,
 })
 export class SimulatorModalComponent {
   title = gettext('Add advanced simulator');
