@@ -14,12 +14,7 @@ export default {
     contentSecurityPolicy:
       "base-uri 'none'; default-src 'self' 'unsafe-inline' http: https: ws: wss:; connect-src 'self' http: https: ws: wss:;  script-src 'self' *.bugherd.com *.twitter.com *.twimg.com *.aptrinsic.com 'unsafe-inline' 'unsafe-eval' data:; style-src * 'unsafe-inline' blob:; img-src * data: blob:; font-src * data:; frame-src *; worker-src 'self' blob:;",
     dynamicOptionsUrl: '/apps/public/public-options/options.json',
-    remotes: {
-      'sag-pkg-community-plugins': [
-        'ExampleWidgetPluginModule',
-        'DatapointsGraphWidgetModule',
-      ],
-    },
+    remotes: { 'sag-pkg-community-plugins': ['ExampleWidgetPluginModule'] },
     package: 'plugin',
     isPackage: true,
     noAppSwitcher: true,
@@ -64,22 +59,10 @@ export default {
       '@ngx-translate/core',
     ],
     copy: [
-      {
-        from: 'CHANGELOG.md',
-        to: 'CHANGELOG.md',
-      },
-      {
-        from: 'screenshots',
-        to: 'screenshots',
-      },
-      {
-        from: 'c8y-widget-preview-img',
-        to: 'c8y-widget-preview-img',
-      },
-      {
-        from: 'LICENSE',
-        to: 'LICENSE.txt',
-      },
+      { from: 'CHANGELOG.md', to: 'CHANGELOG.md' },
+      { from: 'screenshots', to: 'screenshots' },
+      { from: 'c8y-widget-preview-img', to: 'c8y-widget-preview-img' },
+      { from: 'LICENSE', to: 'LICENSE.txt' },
     ],
   },
 } as const satisfies EnvironmentOptions;
