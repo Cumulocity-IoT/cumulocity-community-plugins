@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "rimraf dist && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "commit": "commit",
     "cypress:ci:plugins": "start-server-and-test http-server http://localhost:4200/apps/sag-pkg-community-plugins/index.html 'cypress run --env grepTags=@noShell'",
     "cypress:headless:shell:recording": "start-test --expect 404 cypress:ctrl:recording :4200/c8yctrl/current 'cypress run --env C8Y_CTRL_MODE=recording,grepTags=@shell'",
