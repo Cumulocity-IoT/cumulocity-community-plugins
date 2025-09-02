@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.7.0...v3.8.0) (2025-08-29)
+
+
+### Features
+
+* **core:** removing dp graph as it is now part of the core product ([#70](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/70)) ([df14fbd](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/df14fbdd4b721c5d824860fcd8517e0208858b43))
+
 # [3.7.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.6.0...v3.7.0) (2025-05-07)
 
 
