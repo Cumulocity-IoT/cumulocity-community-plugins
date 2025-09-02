@@ -31,8 +31,8 @@ We're here to help! This is simply a reminder of what we are going to look for
 before merging your code._
 -->
 
-- [ ] I have read the [CONTRIBUTING](https://github.com/SoftwareAG/cumulocity-community-plugins/blob/main/CONTRIBUTING.md) doc
-- [ ] I have signed the [CLA](https://github.com/SoftwareAG/cumulocity-community-plugins/blob/main/CONTRIBUTOR-LICENSE-AGREEMENT.md) (in all commits with git commit -s)
+- [ ] I have read the [CONTRIBUTING](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/blob/main/CONTRIBUTING.md) doc
+- [ ] I have signed the [CLA](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/blob/main/CONTRIBUTOR-LICENSE-AGREEMENT.md) (in all commits with git commit -s)
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] I have added necessary documentation (if appropriate)
 
