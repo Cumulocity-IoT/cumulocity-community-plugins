@@ -24,7 +24,8 @@
             "ignoreRestSiblings": true
           }
         ],
-        "@typescript-eslint/no-explicit-any": "warn"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@angular-eslint/prefer-standalone": "off"
       },
       "parserOptions": {
         "project": ["tsconfig.json"]
@@ -64,7 +65,8 @@
             "ignoreRestSiblings": true
           }
         ],
-        "@typescript-eslint/no-explicit-any": "warn"
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@angular-eslint/prefer-standalone": "off"
       },
       "parserOptions": {
         "project": ["tsconfig.spec.json"]
