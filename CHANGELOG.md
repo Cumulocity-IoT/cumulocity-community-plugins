@@ -1,3 +1,20 @@
+# [4.0.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.7.0...v4.0.0) (2025-09-05)
+
+
+* feat!(core): remove example and DPG widgets as they are part of the core product ([#77](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/77)) ([7c4840b](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/7c4840b60ea47aa35d42ebf6734dd9c595c76923))
+
+
+### Features
+
+* **core:** removing dp graph as it is now part of the core product ([#70](https://github.com/SoftwareAG/cumulocity-community-plugins/issues/70)) ([df14fbd](https://github.com/SoftwareAG/cumulocity-community-plugins/commit/df14fbdd4b721c5d824860fcd8517e0208858b43))
+
+
+### BREAKING CHANGES
+
+* The example plugin and the data points graph widgets have been removed, as they both have counterparts in core product.
+
+Co-authored-by: Lukasz Janusz <lukasz.janusz@cumuloicty.com>
+
 # [3.8.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.7.0...v3.8.0) (2025-08-29)
 
 
