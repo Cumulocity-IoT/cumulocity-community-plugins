@@ -34,4 +34,4 @@ You agree to notify **Cumulocity GmbH** of any facts or circumstances of which y
  
 By signing-off on my Submissions, I agree to be bound by the terms of the then current CONTRIBUTOR LICENSE AGREEMENT located at https://github.com/Cumulocity-IoT/cumulocity-community-plugins/blob/main/CONTRIBUTOR-LICENSE-AGREEMENT.md, which I have read and understood and I agree that this Submission constitutes a "Contribution" under this Agreement.
  
-Release Date: 2022-05-02
+Release Date: 2022-05-02  |  Update Date: 2025-09-11

@@ -6,7 +6,8 @@ This package provides a number of plugins that are developed and maintained by t
 
 - Node.js (version 20.11.1 or higher)
 - npm (version 8.0.0 or higher)
-- Angular CLI
+- Angular CLI 19.x
+- Angular 19.x
 
 ## Setup and Development
 
