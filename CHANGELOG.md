@@ -1,3 +1,10 @@
+# [4.1.0](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/compare/v4.0.0...v4.1.0) (2025-09-16)
+
+
+### Features
+
+* **core:** update plugins dependencies ([#74](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/issues/74)) ([7078602](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/commit/7078602cf1afaaf511979b781dd95386f793f5f1))
+
 # [4.0.0](https://github.com/SoftwareAG/cumulocity-community-plugins/compare/v3.7.0...v4.0.0) (2025-09-05)
 
 
