@@ -6,7 +6,7 @@ import { FetchClient } from '@c8y/client';
 import Anthropic from '@anthropic-ai/sdk';
 import { Router } from '@angular/router';
 
-const AI_MODEL = 'claude-3-5-sonnet-20240620';
+const AI_MODEL = 'claude-haiku-4-5';
 
 @Component({
   selector: 'c8y-simulator-modal',
@@ -105,7 +105,9 @@ export class SimulatorModalComponent {
           content: [
             {
               type: 'text',
-              text: usecase,
+              text: `${usecase}
+
+REMINDER: Respond with ONLY raw JSON. Start with [ character, end with ] character. No markdown code fences.`,
             },
           ],
         },

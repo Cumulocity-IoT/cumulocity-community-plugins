@@ -811,7 +811,7 @@ Please include:
 
 this is an example of the expected output
 
-\`\`\`json
+<expected_output>
 {
     "name": "Electric Car",
     "state": "RUNNING",
@@ -899,8 +899,24 @@ this is an example of the expected output
             "seconds": 47
         }
     ]
-}\`\`\`
+}</expected_output>
 
 All i need to provide you is the number of simulators and the specific use case, in return you should
 provide me a single json file with an array of simulators, but only the plain JSON, nothing else
+
+CRITICAL OUTPUT FORMAT REQUIREMENTS:
+Your ENTIRE response must be ONLY the raw JSON array. No markdown, no code fences, no tags, no explanation.
+- First character of your response: [
+- Last character of your response: ]
+- Do NOT use markdown code fences (\`\`\`json or \`\`\`)
+- Do NOT use any XML/HTML tags (including <expected_output> from example above)
+- Do NOT include any text before or after the JSON
+
+INCORRECT RESPONSE (DO NOT DO THIS):
+\`\`\`json
+[{"name": "simulator"}]
+\`\`\`
+
+CORRECT RESPONSE (DO THIS):
+[{"name": "simulator"}]
 `;
