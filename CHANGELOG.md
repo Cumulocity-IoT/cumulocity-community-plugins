@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/compare/v4.1.0...v4.1.1) (2025-11-06)
+
+
+### Bug Fixes
+
+* **core:** update LLM model to use up to date alias and improve prompt for advanced simulator ([#78](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/issues/78)) ([4c486d1](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/commit/4c486d18fa99ed250b9b3aaccf3bac5a1cb57dc1))
+
 # [4.1.0](https://github.com/Cumulocity-IoT/cumulocity-community-plugins/compare/v4.0.0...v4.1.0) (2025-09-16)
 
 
