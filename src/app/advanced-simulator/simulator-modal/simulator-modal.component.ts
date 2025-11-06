@@ -94,6 +94,7 @@ export class SimulatorModalComponent {
       dangerouslyAllowBrowser: true,
     });
 
+    const assistantMessagePrefill = `[`;
     const msg = await anthropic.messages.create({
       model: AI_MODEL,
       max_tokens: 8192,
@@ -111,11 +112,21 @@ REMINDER: Respond with ONLY raw JSON. Start with [ character, end with ] charact
             },
           ],
         },
+        // prefill the response to ensure valid JSON
+        {
+          role: 'assistant',
+          content: [
+            {
+              type: 'text',
+              text: assistantMessagePrefill,
+            },
+          ],
+        },
       ],
     });
 
     const content: any = msg.content[0];
-    const bodyAsString: string = content.text;
+    const bodyAsString: string = assistantMessagePrefill + content.text;
 
     return {
       simulatorBody: JSON.parse(bodyAsString),
