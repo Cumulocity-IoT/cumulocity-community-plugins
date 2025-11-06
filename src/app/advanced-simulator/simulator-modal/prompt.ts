@@ -811,96 +811,146 @@ Please include:
 
 this is an example of the expected output
 
-\`\`\`json
-{
+<expected_output>
+[
+  {
     "name": "Electric Car",
     "state": "RUNNING",
     "instances": 1,
-    "supportedOperations": ["c8y_Restart", "c8y_Configuration", "c8y_SoftwareList", "c8y_Firmware"],
+    "supportedOperations": [
+      "c8y_Restart",
+      "c8y_Configuration",
+      "c8y_SoftwareList",
+      "c8y_Firmware"
+    ],
     "commandQueue": [
-        {
-            "type": "builtin",
-            "messageId": "200",
-            "values": [
-                "c8y_Speed",
-                "speed",
-                "80",
-                "km/h"
-            ]
-        },
-        {
-            "type": "builtin",
-            "messageId": "402",
-            "values": [
-                "48.8566",
-                "2.3522",
-                "30",
-                "6"
-            ]
-        },
-        {
-            "type": "sleep",
-            "seconds": 28
-        },
-        {
-            "type": "builtin",
-            "messageId": "200",
-            "values": [
-                "c8y_BatteryLevel",
-                "battery",
-                "15",
-                "%"
-            ]
-        },
-        {
-            "type": "builtin",
-            "messageId": "301",
-            "values": [
-                "c8y_LowBatteryAlarm",
-                "Low battery level!",
-                ""
-            ]
-        },
-        {
-            "type": "builtin",
-            "messageId": "402",
-            "values": [
-                "48.8570",
-                "2.3530",
-                "32",
-                "6"
-            ]
-        },
-        {
-            "type": "sleep",
-            "seconds": 39
-        },
-        {
-            "type": "builtin",
-            "messageId": "200",
-            "values": [
-                "c8y_TirePressure",
-                "pressure",
-                "28",
-                "psi"
-            ]
-        },
-        {
-            "type": "builtin",
-            "messageId": "301",
-            "values": [
-                "c8y_LowTirePressureAlarm",
-                "Low tire pressure detected!",
-                ""
-            ]
-        },
-        {
-            "type": "sleep",
-            "seconds": 47
-        }
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_Speed", "speed", "80", "km/h"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "402",
+        "values": ["48.8566", "2.3522", "30", "6"]
+      },
+      {
+        "type": "sleep",
+        "seconds": 28
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_BatteryLevel", "battery", "15", "%"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "301",
+        "values": ["c8y_LowBatteryAlarm", "Low battery level!", ""]
+      },
+      {
+        "type": "builtin",
+        "messageId": "402",
+        "values": ["48.8570", "2.3530", "32", "6"]
+      },
+      {
+        "type": "sleep",
+        "seconds": 39
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_TirePressure", "pressure", "28", "psi"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "301",
+        "values": [
+          "c8y_LowTirePressureAlarm",
+          "Low tire pressure detected!",
+          ""
+        ]
+      },
+      {
+        "type": "sleep",
+        "seconds": 47
+      }
     ]
-}\`\`\`
+  },
+  {
+    "id": "582189204",
+    "name": "Electric Car Charging Station",
+    "state": "RUNNING",
+    "instances": 1,
+    "commandQueue": [
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ChargingPower", "power", "7.2", "kW"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ChargingVoltage", "voltage", "230", "V"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ChargingCurrent", "current", "31.3", "A"]
+      },
+      {
+        "type": "sleep",
+        "seconds": 12.0
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_EnergyConsumed", "energy", "45.6", "kWh"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ConnectorTemperature", "temperature", "28.5", "C"]
+      },
+      {
+        "type": "sleep",
+        "seconds": 18.0
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ChargingPower", "power", "7.3", "kW"]
+      },
+      {
+        "type": "builtin",
+        "messageId": "200",
+        "values": ["c8y_ChargingCurrent", "current", "31.7", "A"]
+      },
+      {
+        "type": "sleep",
+        "seconds": 25.0
+      }
+    ]
+  }
+]
+</expected_output>
 
 All i need to provide you is the number of simulators and the specific use case, in return you should
 provide me a single json file with an array of simulators, but only the plain JSON, nothing else
+
+CRITICAL OUTPUT FORMAT REQUIREMENTS:
+Your ENTIRE response must be ONLY the raw JSON array. No markdown, no code fences, no tags, no explanation.
+- First character of your response: [
+- Last character of your response: ]
+- Do NOT use markdown code fences (\`\`\`json or \`\`\`)
+- Do NOT use any XML/HTML tags (including <expected_output> from example above)
+- Do NOT include any text before or after the JSON
+
+INCORRECT RESPONSE (DO NOT DO THIS):
+\`\`\`json
+[{"name": "simulator"}]
+\`\`\`
+
+CORRECT RESPONSE (DO THIS):
+[{"name": "simulator"}]
 `;

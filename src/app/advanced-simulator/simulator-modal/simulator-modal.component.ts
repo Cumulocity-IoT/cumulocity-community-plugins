@@ -6,7 +6,7 @@ import { FetchClient } from '@c8y/client';
 import Anthropic from '@anthropic-ai/sdk';
 import { Router } from '@angular/router';
 
-const AI_MODEL = 'claude-3-5-sonnet-20240620';
+const AI_MODEL = 'claude-haiku-4-5';
 
 @Component({
   selector: 'c8y-simulator-modal',
@@ -94,6 +94,7 @@ export class SimulatorModalComponent {
       dangerouslyAllowBrowser: true,
     });
 
+    const assistantMessagePrefill = `[`;
     const msg = await anthropic.messages.create({
       model: AI_MODEL,
       max_tokens: 8192,
@@ -105,7 +106,19 @@ export class SimulatorModalComponent {
           content: [
             {
               type: 'text',
-              text: usecase,
+              text: `${usecase}
+
+REMINDER: Respond with ONLY raw JSON. Start with [ character, end with ] character. No markdown code fences.`,
+            },
+          ],
+        },
+        // prefill the response to ensure valid JSON
+        {
+          role: 'assistant',
+          content: [
+            {
+              type: 'text',
+              text: assistantMessagePrefill,
             },
           ],
         },
@@ -113,7 +126,7 @@ export class SimulatorModalComponent {
     });
 
     const content: any = msg.content[0];
-    const bodyAsString: string = content.text;
+    const bodyAsString: string = assistantMessagePrefill + content.text;
 
     return {
       simulatorBody: JSON.parse(bodyAsString),
